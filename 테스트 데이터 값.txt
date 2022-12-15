@@ -1,0 +1,10 @@
+//유저테이블
+INSERT INTO user_01(nickname,username,password,role) VALUES('김광권','rlarhkdrnjs','1234','ADMIN');
+
+
+//식당테이블
+INSERT INTO restaurant01(name,address,description,hours,tel,thum_image,url,owner_id) VALUES("식당이름","부산광역시 동래구","대충 가게 설명","AM 11:30 ~ PM 22:00","010-8120-1203","/img/test.png","www.naver.com",1);
+
+//메뉴테이블
+INSERT INTO menu01(description,img,name,price,restaurant_id) VALUES("메뉴에 대한 설명","/img/test.png","국밥",10000,1);
+INSERT INTO menu01(description,img,name,price,restaurant_id) VALUES("메뉴에 대한 설명2","/img/test.png","파스타",20000,1);
