@@ -3,7 +3,6 @@
 
 <div class="container">
 	<h2 align="center">음식점 등록</h2><br><br><br>
-	<form action="/owner/register" method="post">
 	<div class="form-group">
 		<label for="name">음식점이름 :</label>
 		<input type="text" id="name" name="name" class="form-control" placeholder="Enter Restaurant Name">
@@ -30,7 +29,53 @@
 	</div>
 
 	<div align="center">
-		<button type="submit" class="btn btn-info" id="btnRegister">Register</button>
+		<button type="button" class="btn btn-info" id="btnRegister">Register</button>
 	</div>
-	</form>
 </div>
+
+<script>
+$("#btnRegister").click(function() {
+	if($("#name").val()=="") {
+		alert("음식점 이름을 입력하세요")
+		return false;
+	}
+	if($("#businessNum").val()=="") {
+		alert("사업자 등록번호를 입력하세요")
+		return false;
+	}
+	if($("#address").val()=="") {
+		alert("주소를 입력하세요")
+		return false;
+	}
+	if($("#tel").val()=="") {
+		alert("전화번호를 입력하세요")
+		return false;
+	}
+	if($("#hours").val()=="") {
+		alert("운영시간을 입력하세요")
+		return false;
+	}
+	var dataParam = {
+		"name" : $("#name").val(),
+//		"businessNum" : $("#businessNum").val(),
+		"address" : $("#address").val(),
+		"tel" : $("#tel").val(),
+		"hours" : $("#hours").val(),
+		"url" : $("#url").val()
+	}
+	$.ajax({
+		type : "post",
+		url : "/owner/register",
+		contentType : "application/json;charset=utf-8",
+		data : JSON.stringify(dataParam)
+	})
+	.done(function() {
+		alert("등록 성공")
+		location.href="/owner/update"
+	})
+	.fail(function() {
+		alert("error")
+	})
+})
+</script>
+
