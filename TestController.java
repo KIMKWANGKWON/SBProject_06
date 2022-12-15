@@ -55,4 +55,5 @@ public class TestController {
 		model.addAttribute("favorites", userService.findByUser_id(user_id));
 		return "/user/favorite";
 	}
+
 }
