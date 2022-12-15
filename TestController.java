@@ -5,15 +5,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import lombok.RequiredArgsConstructor;
 import restaurant.model.Restaurant;
 import restaurant.service.RestaurantService;
+import restaurant.service.UserService;
 
 
 @Controller
 @RequiredArgsConstructor
 public class TestController {
+	private final UserService userService;
 	private final RestaurantService restaurantService;
 	@GetMapping("/")
 	public String home() {
@@ -43,8 +46,13 @@ public class TestController {
 		return "/owner/register";
 	}
 	@PostMapping("/owner/register")
-	public String register(Restaurant restaurant) {
+	public String register(@RequestBody Restaurant restaurant) {
 		restaurantService.register(restaurant);
 		return "/owner/update";
+	}
+	@GetMapping("/user/favorite/{user_id}")
+	public String favorite(@PathVariable Long user_id, Model model) {
+		model.addAttribute("favorites", userService.findByUser_id(user_id));
+		return "/user/favorite";
 	}
 }
