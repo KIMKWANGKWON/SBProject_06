@@ -9,4 +9,5 @@ import restaurant.model.Favorites;
 public interface FavoriteRepository extends JpaRepository<Favorites, Long>{
 	
 	public List<Favorites> findByUser_id(Long user_id);
+
 }
