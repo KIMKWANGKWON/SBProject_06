@@ -29,5 +29,4 @@ public class UserService {
 		return fRepository.findByUser_id(user_id);
 	}
 
-
 }
