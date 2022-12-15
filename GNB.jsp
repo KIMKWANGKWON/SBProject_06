@@ -39,7 +39,7 @@
     </button>
     <div class="dropdown-menu">
       <h5 class="dropdown-header">마이페이지</h5>
-      <a class="dropdown-item" href="#">Link 1</a>
+      <a class="dropdown-item" href="/user/favorite/1">즐겨찾기</a>
       <a class="dropdown-item" href="#">Link 2</a>
       <a class="dropdown-item" href="#">Link 3</a>
       <h5 class="dropdown-header">식당 관리</h5> <!-- 사업자라면 -->
