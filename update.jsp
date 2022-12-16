@@ -1,168 +1,89 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file ="../include/header.jsp" %>
 
-
-<style>
-	.restaurant_image{
-		width: 40%;
-	}
-	.restaurant_info{
-		margin-left: 30px;
-		width: 50%
-	}
-	
-	.form-title{
-		width:40%;
-		height:100%
-	}
-</style>
-
-
-
+<%@ include file="../include/header.jsp" %>
+    
 <div class="container">
-
-
-	<h2 align="left">
-	<div class="form-title">
-	<input type="text" class="form-control" name="name" id="name" placeholder="이름">
+	<h2 align="center">수정</h2><br><br><br>
+	<div class="form-group">
+		<label for="userid">ID :</label>
+		<input type="text" id="userid" name="userid" class="form-control" value="${user.id }" readonly="readonly">
 	</div>
-	</h2><br/>
-	
-	
-	
-  	<div class="container-fluid">
-    	<div class="row" align="center">
-      		<div class="restaurant_image">
-				<div class="mb-3">
-  				<input class="form-control" type="file" name="image" id="image">
-  				<img src="/img/test.png">
-				</div>
-			</div>
-      		<div class="restaurant_info"><!-- 테이블 -->
-				<table class="table table-borderless">
-					
-					<tr>
-					<td><label for="address">주소</label></td>
-					<td><input type="text" class="form-control" name="address" id="address"></td>
-					</tr>
-					
-					<tr>
-					<td><label for = "tel">전화번호</label></td>
-					<td><input type="text" class="form-control" name="tel" id="tel"></td>
-					</tr>
-					
-					<tr>
-					<td><label for = "hours">운영시간</label></td>
-					<td><input type="text" class="form-control" name="hours" id="hours"></td>
-					</tr>
-					
-					<tr>
-					<td><label for = "url">홈페이지</label></td>
-					<td><input type="text" class="form-control" name="url" id="url"></td>
-					</tr>
-					
-				</table>
-				<div><!-- 테이블 -->
-
-				</div><!-- 로우 -->
-			</div><!-- 컨테이너 -->
-    	</div>
-  	</div>
-	<hr>
-	<div class="container-fluid">
-    	<div class="row" align="center">
-      		<div class="col-md"><button onclick="javascript:show('menuResult')" class="btn btn-link">Menu</button></div>
-      		<div class="col-md"><button onclick="javascript:show('descriptionResult')" class="btn btn-link">가게 정보</button></div>
-      		<div class="col-md"><button onclick="javascript:show('commentResult')" class="btn btn-link">후기</button></div>
-    	</div>  
-  	</div>
-  	<hr>
-  	<div id="menuResult">
-  	<table class='table table-borderless'>
-			<thead>
-				<tr align='center'>
-				<th>메뉴</th>
-				<th>이름</th>
-				<th>가격</th>
-				<th>기타</th>
-				</tr>
-			</thead>
-			
-	<tbody>
-    
-    <tr align="center">
-    
-    <td><input type="file" class="form-control" id="img" name="img"></td>
-    
-	<td><input type="text" class="form-control" name="name" id="name" placeholder="메뉴 이름"></td>
-
-	<td><input type="text" class="form-control" name="price" id="price" placeholder="가격"></td>
-	
-	<td><input type="text" class="form-control" name="description" id="description" placeholder="설명">
-	
-	</tr>
-			
-  	</tbody>
-  	</table>
-  	<button type="button" id="btnMenu">+</button><!-- 메뉴입력 -->
-  	</div>
-
-  	<div id="replyResult">
-  	
-  	<div id="descriptionResult">
-  	<h4>${restaurant.description }</h4>
-  	</div>
-  	<div id="commentResult">
-  	</div>
+	<div class="form-group">
+		<label for="nickname">Nickname :</label>
+		<input type="text" id="nickname" name="nickname" class="form-control" value="${user.nickname }">
 	</div>
-	<script src="/js/detail.js"></script>
-	<script>
-	show("menuResult") //디폴트
+	<div class="form-group">
+		<label for="password">PWD :</label> 
+		<input type="password" id="pwd" name="pwd" class="form-control" value="${user.password }" >
+	</div>
+		<div class="form-group">
+		<label for="password">PWD Check :</label> 
+		<input type="password" id="pwd_check" name="pwd_check" class="form-control" value="${user.password}" placeholder="Enter Password_check">
+	</div>
 	
-	var init = function(){
-		$.ajax({
-			type:"get",
-			url:"/menu/list"+$("#id").val()
-		})
-		.done(function(resp){
-			var str = "<table class='table table-hover'>"
-			$.each(resp, function(key, val){
-				str+="<tr>"
-				str+="<td>"++"</td>"
-				str+="<td>"+val.menu.name+"</td>"
-				str+="<td>"+val.price+"</td>"
-				str+="<td>"+val.description+"</td>"
-				str+="</tr>"
-			})
-			str+="</table>"
-			$("#replyresult").html(str);
-		})
+	<div align="right">
+		<button type="button" class="btn btn-info" id="btnUpdate">수정하기</button><br/><br/>
+		<button type="button" class="btn btn-danger" id="btnDelete">탈퇴하기</button>
+	</div>
+</div>
+
+<script>
+$("#btnUpdate").click(function(){
+	if($("#nickname").val()==""){
+		alert("닉네임을 입력하세요");
+		$("#nickname").focus();
+		return false;
 	}
-	
-	
-	$("#btnMenu").click(function(){
-		var form = $("#img").get(0).files[0];
-		var data={
-				"name":$("#name").val(),
-				"price":$("#price").val(),
-				"description":$("#description").val()
-		}
-		var formData = new FormData();
-		$.ajax({
-			type:"PUT",
-			url:"/menu/update",
-			contentType:"multipart/form-data;charset=utf-8",
-			data:JSON.stringify(data, formData),
-			success:function(resp){
-				alert("메뉴가 저장되었습니다")
-				init();
-			},
-			error:function(e){
-				alert("메뉴 저장에 실패하였습니다"+e)
-			}
-		})
+	if($("#pwd").val()==""){
+		alert("비밀번호를 입력하세요");
+		$("#pwd").focus();
+		return false;
+	}
+	if($("#pwd").val()!=$("#pwd_check").val()){
+		alert("비밀번호가 일치하지 않습니다");
+		$("#pwd_check").focus();
+		return false;
+	}
+	data={
+			"id":$("#userid").val(),
+			"nickname":$("#nickname").val(),
+			"password":$("#pwd").val()
+	}
+	$.ajax({
+		type:"put",
+		url:"/user/update",
+		contentType:"application/json;charset=utf-8",
+		data:JSON.stringify(data)
 	})
-	
-	</script>
-  	<input type="button" class="btn btn-info" id="btnUpdate" value="update">
+	.done(function(resp){
+		if(resp=="success"){
+			alert("회원정보가 변경되었습니다")
+			location.href="/user/view/1";
+		}
+	})
+	.fail(function(e){
+		alert("회원정보 변경에 실패하였습니다")
+	})
+})//수정
+
+$("#btnDelete").click(function(){
+	if(!confirm("탈퇴하면 복구하실 수 없습니다. 그래도 탈퇴하시겠습니까?")){
+		return false;
+	}
+	$.ajax({
+		type:"delete",
+		url:"/user/delete/${id}",
+		success:function(resp){
+			if(resp=="success"){
+				alert("탈퇴 완료되었습니다")
+				location.href="/"
+			}
+		},
+		error:function(e){
+			alert("탈퇴에 실패하였습니다. 관리자에게 문의해주세요.")
+		}
+	})
+})//삭제
+
+</script>
