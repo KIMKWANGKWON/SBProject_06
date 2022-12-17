@@ -23,7 +23,7 @@
         			<td>${favorite.restaurant.tel }</td>
         			<td>${favorite.restaurant.hours }</td>
 <%--         			<td>${favorite.restaurant.description }</td> --%>
-        			<td><input type="button" class="btn btn-danger" onclick="dislike('${favorite.id}')" value="좋아요"></td>
+        			<td><input type="button" class="btn btn-danger" onclick="dislike('${favorite.id}')" value="delete"></td>
       			</tr>
       		</c:forEach>
     	</tbody>
