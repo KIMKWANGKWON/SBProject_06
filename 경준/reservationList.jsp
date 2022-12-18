@@ -41,7 +41,7 @@
       							</div>
       							<div class="col-lg-6">
 									<label for="rsvDate">예약날짜</label>
-      								<input type="text" name="rsvDate" class="form-control" value="${rsv.rsvDate }" readonly="readonly"><br>
+      								<input type="text" name="rsvDate" class="form-control" value="<fmt:formatDate value="${rsv.rsvDate}" pattern="yyyy-MM-dd"/>" readonly="readonly"><br>
       								<label for="rsvTime">예약시간</label>
       								<input type="text" name="rsvTime" class="form-control" value="${rsv.rsvTime }" readonly="readonly">
       							</div>
