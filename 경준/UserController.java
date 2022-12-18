@@ -84,9 +84,9 @@ public class UserController {
 	//좋아요 ON,OFF
 	@PostMapping("like")
 	@ResponseBody
-	public String like(@RequestBody Favorites favorite) {
-		uService.like(favorite);
-		return "";
+	public Long like(@RequestBody Favorites favorite) {
+		return uService.like(favorite);
+		
 	}
 	
 	//좋아요 목록
@@ -103,4 +103,5 @@ public class UserController {
 		uService.fDelete(fid);
 		return "";
 	}
+	
 }

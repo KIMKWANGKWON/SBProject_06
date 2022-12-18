@@ -86,12 +86,14 @@ public class UserService {
 	}
 	
 	@Transactional
-	public void like(Favorites favorite) {
+	public Long like(Favorites favorite) {
 		if(fRepository.isExist(favorite.getUser().getId(), favorite.getRestaurant().getId())==null) {
 			fRepository.save(favorite);
+			return 1L;
 		} else {
 			System.out.println("test");
 			fRepository.delete(favorite.getUser().getId(), favorite.getRestaurant().getId());
+			return 0L;
 		}
 	}
 	
@@ -102,5 +104,9 @@ public class UserService {
 	
 	public Reservations nearestRsv(Long id) {
 		return rsvRepository.nearestRsv(id);
+	}
+	
+	public Favorites findLike(Long user_id, Long restaurant_id) {
+		return fRepository.isExist(user_id, restaurant_id);
 	}
 }
