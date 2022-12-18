@@ -99,4 +99,8 @@ public class UserService {
 	public void fDelete(Long fid) {
 		fRepository.deleteById(fid);
 	}
+	
+	public Reservations nearestRsv(Long id) {
+		return rsvRepository.nearestRsv(id);
+	}
 }

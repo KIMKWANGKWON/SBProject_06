@@ -46,6 +46,7 @@ public class UserController {
 	@GetMapping("mypage/{id}")
 	public String mypage(@PathVariable Long id,Model model) {
 		model.addAttribute("user",uService.view(id));
+		model.addAttribute("rsv",uService.nearestRsv(id));
 		return "/user/mypage";
 	}
 	
@@ -56,7 +57,7 @@ public class UserController {
 		model.addAttribute("user", uService.view(id));
 		return "/user/view";
 	}
-	
+		
 	//내 정보 수정
 	@GetMapping("update/{id}")
 	public String update(@PathVariable Long id, Model model) {
