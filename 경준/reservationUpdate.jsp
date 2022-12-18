@@ -3,14 +3,15 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <div class="container">
 	<h2 align="center">${rsv.restaurant.name } 예약변경하기</h2>
 	<div class="row" align="center">
+		<div class="col-lg-6">					<!-- 썸네일 -->
+			<img src="${rsv.restaurant.thumImage }">
+		</div>
 		<div class="col-lg-6">					<!-- 달력 -->
 			<div id="datepicker"></div>
-		</div>
-		<div class="col-lg-6">					<!-- 시간 -->
-			
   		</div>
   	</div>
   	<div class="mt-3" align="center">
@@ -29,7 +30,7 @@
 						<label for="rsvDate">예약날짜</label>
       					<input type="text" id="rsvDate" name="rsvDate" class="form-control" readonly="readonly"><br>
       					<label for="rsvTime">예약시간</label>
-      					<input type="text" id="rsvTime" name="rsvTime" class="form-control" readonly="readonly">
+      					<input type="text" id="rsvTime" name="rsvTime" class="form-control timepicker" readonly="readonly">
       				</div>
       				</div>
     			</div>
@@ -57,6 +58,7 @@ $("#btnRsvUpdate").click(function() {
 		"id" : ${rsv.id},
 		"peopleCnt" : $("#peopleCnt").val(),
 		"rsvDate" : $("#rsvDate").val(),
+		"rsvTime" : $("rsvTime").val(),
 		"msg" : $("#msg").val()
 	}
 	$.ajax({
@@ -111,5 +113,21 @@ const config = {
 /* 캘린더 */
 $(function() {
 	$("#datepicker").datepicker(config);
+});
+
+$(document).ready(function(){
+	$('input.timepicker').timepicker({});
+});
+
+$('.timepicker').timepicker({
+	timeFormat: 'h:mm p',
+	interval: 30,
+	minTime: '10',
+	maxTime: '6:00pm',
+	defaultTime: '11',
+	startTime: '10:00',
+	dynamic: false,
+	dropdown: true,
+	scrollbar: true
 });
 </script>

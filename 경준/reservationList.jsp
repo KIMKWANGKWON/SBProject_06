@@ -3,7 +3,7 @@
 <%@ include file="../include/header.jsp" %>
 
 <div class="container">
-	<h3 align="center">[]님의 예약현황</h3>
+	<h3 align="center">[<sec:authentication property="principal.user.nickname"/>]님의 예약현황</h3>
 	<table class="table table-hover">
 		<thead align="center">
 			<tr>
@@ -21,7 +21,7 @@
 					<td><img src="${rsv.restaurant.thumImage}"></td>
 					<td>${rsv.restaurant.name}</td>
 					<td><fmt:formatDate value="${rsv.rsvDate}" pattern="yyyy-MM-dd"/></td>
-					<td><!-- 예약시간 --></td>
+					<td>${rsv.rsvTime }</td>
 					<td><a href="/user/reservationUpdate/${rsv.id}"><button type="button" class="btn btn-primary" id="updateRsv">예약 변경</button></a></td>
 					<td><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo${rsv.id }">예약내용 상세보기</button></td>
 				</tr>
@@ -37,13 +37,13 @@
 									<label for="name">예약자</label>
       								<input type="text" name="name" class="form-control" value="${rsv.user.nickname }" readonly="readonly"><br>
       								<label for="peopleCnt">예약자 수</label>
-      								<input type="text" name="peopleCnt" class="form-control" value="${rsv.peopleCnt }"readonly="readonly">
+      								<input type="text" name="peopleCnt" class="form-control" value="${rsv.peopleCnt }" readonly="readonly">
       							</div>
       							<div class="col-lg-6">
 									<label for="rsvDate">예약날짜</label>
-      								<input type="text" name="rsvDate" class="form-control" value="${rsv.rsvDate }"readonly="readonly"><br>
+      								<input type="text" name="rsvDate" class="form-control" value="${rsv.rsvDate }" readonly="readonly"><br>
       								<label for="rsvTime">예약시간</label>
-      								<input type="text" name="rsvTime" class="form-control" readonly="readonly">
+      								<input type="text" name="rsvTime" class="form-control" value="${rsv.rsvTime }" readonly="readonly">
       							</div>
       							</div>
     						</div>
@@ -63,4 +63,3 @@
 		</tbody>
 	</table>
 </div>
-

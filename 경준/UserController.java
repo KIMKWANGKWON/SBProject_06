@@ -3,6 +3,7 @@ package restaurant.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
+import restaurant.config.auth.PrincipalDetails;
+import restaurant.model.Favorites;
 import restaurant.model.Reservations;
 import restaurant.model.User;
 import restaurant.repository.UserRepository;
@@ -25,34 +28,28 @@ import restaurant.service.UserService;
 @RequestMapping("/user/*")
 @RequiredArgsConstructor
 public class UserController {
-	@Autowired
-	private UserService uService;
-	@Autowired
-	private UserRepository uRepository;
-	private final RestaurantService rService;
+	//주입
+	private final UserService uService;
 	
+	//회원가입
 	@GetMapping("join")
 	private String join() {
 		return "/user/join";
 	}
-	
 	@PostMapping("join")
 	@ResponseBody
 	public String join(@RequestBody User user) {
 		return uService.join(user);
 	}
+	
+	//마이페이지
 	@GetMapping("mypage/{id}")
 	public String mypage(@PathVariable Long id,Model model) {
 		model.addAttribute("user",uService.view(id));
 		return "/user/mypage";
 	}
 	
-	@GetMapping("favorites/{user_id}")
-	public String favorite(@PathVariable Long user_id, Model model) {
-		model.addAttribute("favorites", uService.findByUser_id(user_id));
-		return "/user/favorites";
-	}
-	
+	//나의 상세 정보
 	@GetMapping("view/{id}")
 	public String view(@PathVariable Long id, Model model) {
 		System.out.println("id"+id);
@@ -60,12 +57,12 @@ public class UserController {
 		return "/user/view";
 	}
 	
+	//내 정보 수정
 	@GetMapping("update/{id}")
 	public String update(@PathVariable Long id, Model model) {
 		model.addAttribute("user", uService.view(id));
 		return "/user/update";
 	}
-	
 	@PutMapping("update")
 	@ResponseBody
 	public String update(@RequestBody User user, HttpSession session) {
@@ -74,6 +71,7 @@ public class UserController {
 		return "success";
 	}
 	
+	//회원 탈퇴
 	@DeleteMapping("delete/{id}")
 	@ResponseBody
 	public String delete(@PathVariable Long id, HttpSession session) {
@@ -82,42 +80,26 @@ public class UserController {
 		return "success";
 	}
 	
-	@GetMapping("reservationForm/{rid}")
-	public String reservationForm(@PathVariable Long rid, Model model) {
-		model.addAttribute("restaurant", rService.view(rid));
-		return "/user/reservationForm";
-	}
-	
-	@PostMapping("reservation/{rid}")
+	//좋아요 ON,OFF
+	@PostMapping("like")
 	@ResponseBody
-	public String reservation(@RequestBody Reservations reservations, @PathVariable Long rid) {
-		uService.reservation(reservations, rid);
-		return "success";
+	public String like(@RequestBody Favorites favorite) {
+		uService.like(favorite);
+		return "";
 	}
 	
-	@GetMapping("reservationList/{uid}")
-	public String reservationList(@PathVariable Long uid, Model model) {
-		model.addAttribute("reservations", uService.findByUid(uid));
-		return "/user/reservationList";
+	//좋아요 목록
+	@GetMapping("favorites/{user_id}")
+	public String favorite(@PathVariable Long user_id, Model model) {
+		model.addAttribute("favorites", uService.findByUser_id(user_id));
+		return "/user/favorites";
 	}
 	
-	@GetMapping("reservationUpdate/{rsvid}")
-	public String reservationUpdate(@PathVariable Long rsvid, Model model) {
-		model.addAttribute("rsv", uService.findRsv(rsvid));
-		return "/user/reservationUpdate";
-	}
-	
-	@PutMapping("reservationUpdate")
+	//좋아요 삭제
+	@DeleteMapping("dislike/{fid}")
 	@ResponseBody
-	public String reservationUpdate(@RequestBody Reservations reservations) {
-		uService.updateRsv(reservations);
-		return "success";
-	}
-	
-	@DeleteMapping("reservationCancel/{rsvid}")
-	@ResponseBody
-	public String reservationCancel(@PathVariable Long rsvid) {
-		uService.cancelRsv(rsvid);
-		return "success";
+	public String dislike(@PathVariable Long fid) {
+		uService.fDelete(fid);
+		return "";
 	}
 }
