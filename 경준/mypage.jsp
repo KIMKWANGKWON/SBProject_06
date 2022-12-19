@@ -6,9 +6,11 @@
 	<div class="col-2">
 	<div class="list-group list-group-flush" 
 	style="margin-top : 120px; margin-left : 40px;">
-	  <a href="/user/view/<sec:authentication property="principal.user.id"/>" class="list-group-item list-group-item-action">내 정보 상세보기</a>
-	  <a href="/user/update/<sec:authentication property="principal.user.id"/>" class="list-group-item list-group-item-action">내 정보 수정</a>
-	  <a href="#" class="list-group-item list-group-item-action">Third item</a>
+		<a href="/user/view/<sec:authentication property="principal.user.id"/>" class="list-group-item list-group-item-action">내 정보 상세보기</a>
+	  	<a href="/user/update/<sec:authentication property="principal.user.id"/>" class="list-group-item list-group-item-action">내 정보 수정</a>
+	  	<a href="/user/reservationList/<sec:authentication property="principal.user.id"/>" class="list-group-item list-group-item-action">예약 현황</a>
+	  	<a href="/user/favorites/<sec:authentication property="principal.user.id"/>" class="list-group-item list-group-item-action">즐겨찾기 목록</a>
+		<a href="/inquiry/myQna/<sec:authentication property="principal.user.id"/>" class="list-group-item list-group-item-action">내 Q&A 목록</a>
 	</div>
 	</div>
 	<div class="col-8">
