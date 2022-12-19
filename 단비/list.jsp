@@ -31,6 +31,11 @@
                 right: 10px;
             }
             
+.likeContainer {
+	padding : 5px 350px;
+	color : red;
+}
+            
 </style>
 
 <div class="container">
@@ -43,7 +48,8 @@
 <!--   <h1>File Image</h1><br/> -->
   <div class="row">
   <c:forEach items="${restaurantList}" var="restaurant">
-  <div class="card" style="width:400px" onclick="location.href='/restaurant/view/${restaurant.id}'">
+  <div class="card" style="width:400px">
+  <div onclick="location.href='/restaurant/view/${restaurant.id}'">
     <img class="card-img-top" src="${restaurant.thumImage }" alt="Card image" style="width:100% height:200">
     <div class="card-body">
       <h4 class="card-title">${restaurant.name }</h4>
@@ -51,10 +57,9 @@
       <p class="card-text">주소 : ${restaurant.address }</p>
       <!-- <a href="#" class="btn btn-primary">detail</a> -->
       </div>
-    </div>
-<%--     <input type="button" class="btn btn-secondary" onclick="like(this)" value="좋아요">
-    <input type="hidden" value="${restaurant.id }"/> --%>
-    <h2>
+	</div>
+    <div class="likeContainer">
+      <h2>
     <a onclick="javascript:like(this)" data-param="${restaurant.id }"><span id="showLike">
 	<c:choose>
 	
@@ -64,6 +69,11 @@
 		</c:when>
 	</c:choose>
 	</span></a></h2>
+      </div>
+    </div>
+<%--     <input type="button" class="btn btn-secondary" onclick="like(this)" value="좋아요">
+    <input type="hidden" value="${restaurant.id }"/> --%>
+    
     </c:forEach>
   </div> 
   <br>
@@ -146,9 +156,9 @@ var like = function(input){
 		success:function(resp){
 				alert("성공");
 				if(resp==0){
-					input.querySelector('span i').html("<i class='fa-regular fa-star'>")
+					input.querySelector('span i').className="fa-regular fa-star"
 				} else{
-					input.querySelector('span i').html("<i class='fa-solid fa-star'>")
+					input.querySelector('span i').className="fa-solid fa-star"
 				}
 		}
 	})
