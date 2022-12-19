@@ -32,7 +32,7 @@
             }
             
 .likeContainer {
-	padding : 5px 350px;
+	padding : 0px 350px;
 	color : red;
 }
             
@@ -220,4 +220,3 @@ document.getElementById('popup_open_btn').addEventListener('click', function() {
 });
 </script>
    
-
