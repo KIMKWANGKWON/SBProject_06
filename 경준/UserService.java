@@ -1,5 +1,7 @@
 package restaurant.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +58,10 @@ public class UserService {
 	}
 	
 	@Transactional
-	public void reservation(Reservations reservations, Long rid,PrincipalDetails p) {
+	public void reservation(Reservations reservations, Long rid, PrincipalDetails p) {
 		Restaurant r = new Restaurant();
 		r.setId(rid);
+		
 		reservations.setRestaurant(r);
 		reservations.setUser(p.getUser());
 		rsvRepository.save(reservations);
@@ -73,18 +76,22 @@ public class UserService {
 		return rsvRepository.findById(rsvid).get();
 	}
 	
-	public void updateRsv(Reservations reservations) {
+	@Transactional
+	public void updateRsv(Reservations reservations) throws ParseException {
 		Reservations rsv = rsvRepository.findById(reservations.getId()).get();
 		rsv.setPeopleCnt(reservations.getPeopleCnt());
 		rsv.setMsg(reservations.getMsg());
-		rsv.setRsvDate(reservations.getRsvDate());
+		String str = reservations.getRsvDate() + " " + reservations.getRsvTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		rsv.setRsvDateTime(sdf.parse(str));
+//		rsv.setRsvDate(reservations.getRsvDate());
+//		rsv.setRsvTime(reservations.getRsvTime());
 		rsvRepository.save(rsv);
 	}
 	
 	public void cancelRsv(Long rsvid) {
 		rsvRepository.deleteById(rsvid);
 	}
-	
 	@Transactional
 	public Long like(Favorites favorite) {
 		if(fRepository.isExist(favorite.getUser().getId(), favorite.getRestaurant().getId())==null) {
@@ -96,12 +103,10 @@ public class UserService {
 			return 0L;
 		}
 	}
-	
 	@Transactional
 	public void fDelete(Long fid) {
 		fRepository.deleteById(fid);
 	}
-	
 	public Reservations nearestRsv(Long id) {
 		return rsvRepository.nearestRsv(id);
 	}
