@@ -47,14 +47,23 @@
     <img class="card-img-top" src="${restaurant.thumImage }" alt="Card image" style="width:100% height:200">
     <div class="card-body">
       <h4 class="card-title">${restaurant.name }</h4>
-      <p class="card-text">운영시간 : ${restaurant.hours }</p>
+      <p class="card-text">운영시간 : ${restaurant.openTime } : ${restaurant.closeTime }<br/></p>
       <p class="card-text">주소 : ${restaurant.address }</p>
       <!-- <a href="#" class="btn btn-primary">detail</a> -->
       </div>
     </div>
-    <!-- <button type="button" class="btm_image" onclick="like(this)"><img  src="/likeImg/empty.png"  id="like"></button> -->
-    <input type="button" class="btn btn-secondary" onclick="like(this)" value="좋아요">
-    <input type="hidden" value="${restaurant.id }"/>
+<%--     <input type="button" class="btn btn-secondary" onclick="like(this)" value="좋아요">
+    <input type="hidden" value="${restaurant.id }"/> --%>
+    <h2>
+    <a onclick="javascript:like(this)" data-param="${restaurant.id }"><span id="showLike">
+	<c:choose>
+	
+		<c:when test="${fMap[restaurant.id] != null}"><i class="fa-solid fa-star"></i>
+		</c:when>	
+		<c:when test="${fMap[restaurant.id] == null}"><i class="fa-regular fa-star"></i>
+		</c:when>
+	</c:choose>
+	</span></a></h2>
     </c:forEach>
   </div> 
   <br>
@@ -126,7 +135,7 @@ var like = function(input){
 				id : <sec:authentication property="principal.user.id"/>
 			},
 			restaurant : {
-				id : input.nextElementSibling.value  //자기요소 바로 밑에 요소 가져옴 .value 그 값을 불러옴 ->아이디 식별이 안되니까
+				id : input.dataset.param  //자기요소 바로 밑에 요소 가져옴 .value 그 값을 불러옴 ->아이디 식별이 안되니까
 			} 
 	}
 	$.ajax({
@@ -136,7 +145,11 @@ var like = function(input){
 		contentType : "application/json;charset=utf-8",
 		success:function(resp){
 				alert("성공");
-				//$("#like").attr("src","/likeImg/1.jpg");
+				if(resp==0){
+					input.querySelector('span i').html("<i class='fa-regular fa-star'>")
+				} else{
+					input.querySelector('span i').html("<i class='fa-solid fa-star'>")
+				}
 		}
 	})
 	return;
