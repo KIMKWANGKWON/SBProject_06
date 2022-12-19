@@ -58,7 +58,7 @@ $("#btnRsvUpdate").click(function() {
 		"id" : ${rsv.id},
 		"peopleCnt" : $("#peopleCnt").val(),
 		"rsvDate" : $("#rsvDate").val(),
-		"rsvTime" : $("rsvTime").val(),
+		"rsvTime" : $("#rsvTime").val(),
 		"msg" : $("#msg").val()
 	}
 	$.ajax({
@@ -77,6 +77,7 @@ $("#btnRsvUpdate").click(function() {
 		alert("오류 : " + e)
 	})
 })
+
 /* 예약취소 */
 $("#btnRsvCancel").click(function() {
 	$.ajax({
@@ -107,7 +108,8 @@ const config = {
 	yearSuffix: '년',
 	altField : "#rsvDate",
 	altFormat : "yy-mm-dd",
-	minDate : 0
+	minDate : 0,
+	defaultDate : '<fmt:formatDate value="${rsv.rsvDateTime}" pattern="yyyy-MM-dd"/>'
 }	
 
 /* 캘린더 */
@@ -120,11 +122,11 @@ $(document).ready(function(){
 });
 
 $('.timepicker').timepicker({
-	timeFormat: 'h:mm p',
+	timeFormat: 'HH:mm',
 	interval: 30,
 	minTime: '10',
-	maxTime: '6:00pm',
-	defaultTime: '11',
+	maxTime: '18:00',
+	defaultTime: '<fmt:formatDate value="${rsv.rsvDateTime}" pattern="HH:mm"/>',
 	startTime: '10:00',
 	dynamic: false,
 	dropdown: true,

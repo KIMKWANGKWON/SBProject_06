@@ -10,8 +10,7 @@ import restaurant.model.Reservations;
 public interface ReservationsRepository extends JpaRepository<Reservations, Long> {
 	public List<Reservations> findByUser_id(Long user_id);
 	
-	
-	@Query(value = "SELECT * FROM reservations03 where rsv_date >= now() and user_id = ?1 order by rsv_date limit 1",
-		   nativeQuery = true)
-	public Reservations nearestRsv(Long id);
+	@Query(value = "SELECT * FROM reservations04 where rsv_date_time >= now() and user_id = ?1 order by rsv_date_time limit 1",
+			   nativeQuery = true)
+		public Reservations nearestRsv(Long id);
 }

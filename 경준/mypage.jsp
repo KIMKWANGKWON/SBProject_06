@@ -36,7 +36,7 @@
 				</dl>
 				<dl>
 					<dt>가입날짜</dt>
-					<dd>${user.regdate }</dd>
+					<dd><fmt:formatDate value="${user.regdate }" pattern="yyyy-MM-dd"/></dd>
 				</dl>
 			</div>
 		</div>
@@ -69,8 +69,8 @@
 				<tr>
 					<td><img src="${rsv.restaurant.thumImage}"></td>
 					<td>${rsv.restaurant.name}</td>
-					<td><fmt:formatDate value="${rsv.rsvDate}" pattern="yyyy-MM-dd"/></td>
-					<td>${rsv.rsvTime }</td>
+					<td><fmt:formatDate value="${rsv.rsvDateTime}" pattern="yyyy-MM-dd"/></td>
+					<td><fmt:formatDate value="${rsv.rsvDateTime}" pattern="HH:mm"/></td>
 					<td><a href="/user/reservationUpdate/${rsv.id}"><button type="button" class="btn btn-primary" id="updateRsv">예약 변경</button></a></td>
 					<td><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo${rsv.id }">예약내용 상세보기</button></td>
 				</tr>
@@ -90,9 +90,9 @@
       							</div>
       							<div class="col-lg-6">
 									<label for="rsvDate">예약날짜</label>
-      								<input type="text" name="rsvDate" class="form-control" value="<fmt:formatDate value="${rsv.rsvDate}" pattern="yyyy-MM-dd"/>" readonly="readonly"><br>
+      								<input type="text" name="rsvDate" class="form-control" value="<fmt:formatDate value="${rsv.rsvDateTime}" pattern="yyyy-MM-dd"/>" readonly="readonly"><br>
       								<label for="rsvTime">예약시간</label>
-      								<input type="text" name="rsvTime" class="form-control" value="${rsv.rsvTime }" readonly="readonly">
+      								<input type="text" name="rsvTime" class="form-control" value="<fmt:formatDate value="${rsv.rsvDateTime}" pattern="HH:mm"/>" readonly="readonly">
       							</div>
       							</div>
     						</div>

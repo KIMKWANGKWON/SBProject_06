@@ -4,13 +4,17 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-<div class="container">
+
+<!-- date time picker -->
+
+
+<div class="container" style="position:relative;">
 	<h2 align="center">${restaurant.name } 예약하기</h2>
 	<div class="row" align="center">
 		<div class="col-lg-6">					<!-- 썸네일 -->
 			<img src="${restaurant.thumImage }">
 		</div>
-		<div class="col-lg-6">					<!-- 달력 -->
+		<div class="col-lg-6">					<!--  -->
 			<div id="datepicker"></div>
   		</div>
   	</div>
@@ -50,6 +54,7 @@
 </div>
 
 <script>
+//DateTimePicker
 $("#btnReservation").click(function() {
 	if($("#peopleCnt").val()=="") {
 		alert("예약자 수를 입력하세요!")
@@ -82,7 +87,7 @@ $("#btnReservation").click(function() {
 	})
 })
 
-	/* 설정 */
+/* 설정 */	
 	const config = {
 		dateFormat: 'yy-mm-dd',
 		showOn : "button",
@@ -110,12 +115,12 @@ $("#btnReservation").click(function() {
 	});
 	
 	$('.timepicker').timepicker({
-    	timeFormat: 'h:mm p',
+    	timeFormat: 'HH:mm',
     	interval: 30,
-    	minTime: '10',
-    	maxTime: '6:00 pm',
-    	defaultTime: '11',
-    	startTime: '10:00',
+//    	minTime: '${restaurant.openTime}',
+    	maxTime: '${restaurant.rsvTime}',
+    	defaultTime: '${restaurant.openTime}',
+    	startTime: '${restaurant.openTime}',
     	dynamic: false,
     	dropdown: true,
     	scrollbar: true
