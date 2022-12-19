@@ -124,10 +124,10 @@ $(document).ready(function(){
 $('.timepicker').timepicker({
 	timeFormat: 'HH:mm',
 	interval: 30,
-	minTime: '10',
-	maxTime: '18:00',
+	minTime: '${rsv.restaurant.openTime}',
+	maxTime: '${rsv.restaurant.rsvTime}',
 	defaultTime: '<fmt:formatDate value="${rsv.rsvDateTime}" pattern="HH:mm"/>',
-	startTime: '10:00',
+	startTime: '${rsv.restaurant.openTime}',
 	dynamic: false,
 	dropdown: true,
 	scrollbar: true
