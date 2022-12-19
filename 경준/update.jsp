@@ -51,11 +51,11 @@
 					<tr>
 						<td><label for = "hours">운영시간</label></td>
 						<td><label for = "openTime">오픈시간</label>
-							<input type="text" class="form-control timepicker" name="openTime" id="openTime">
+							<input type="text" class="form-control timepicker" value="${restaurant.openTime }" name="openTime" id="openTime">
 							<label for = "closeTime">마감시간</label>
-							<input type="text" class="form-control timepicker" name="closeTime" id="closeTime">
+							<input type="text" class="form-control timepicker" value="${restaurant.closeTime }" name="closeTime" id="closeTime">
 							<label for = "rsvTime">예약마감시간</label>
-							<input type="text" class="form-control timepicker" name="rsvTime" id="rsvTime"></td>
+							<input type="text" class="form-control timepicker" value="${restaurant.rsvTime }" name="rsvTime" id="rsvTime"></td>
 					</tr>
 					
 					<tr>
@@ -228,7 +228,7 @@
     	interval: 30,
    		minTime: '0',
     	maxTime: '23:30',
-    	defaultTime: '0',
+    	
     	startTime: '0',
     	dynamic: false,
     	dropdown: true,
