@@ -1,9 +1,23 @@
-reservationForm 예약 폼 추가
-reservationList 예약 현황 추가
-reservationUpdate 예약 수정/취소 폼 추가
+12/19 update
 
-gnb.jsp 43번 라인 예약현황 링크 추가
+1. reservations.java
+  private Date rsvDateTime 추가
+  private String rsvDate -> @transient
+  private String rsvTime -> @transient
+  
+2. reservationForm.jsp
+3. reservationList.jsp
+4. reservationUpdate.jsp
 
-UserController 85번~122번 라인 reservation 관련 추가
-UserService 59번~89번 라인 reservation 관련 추가
-ReservationRepository 추가
+5. mypage.jsp
+  72,73 번 줄 <fmt~> 추가
+  93,95 번 줄 <fmt~> 추가
+  
+6. reservationController.java
+  44번 줄 예약진행 수정
+
+7. userService.java
+  79번 줄 updateRsv 수정
+
+8. reservationRepository.java
+  13번 줄 sql문 수정
