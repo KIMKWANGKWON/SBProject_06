@@ -35,7 +35,26 @@
 
   mypage.jsp 13번 줄 추가
   
+=================================================
 
-아직 다 구현하지는 않아서 다완성하고 UPDATE 해도 됩니다.
+12/20 12:30
+
+< 회원 목록/ 음식점 목록 update >
+
+1. GNB.jsp 57 58 번줄 update
+
+2. memberList.jsp
+   memberView.jsp
+   restaurantList.jsp
+   restaurantView.jsp
+   
+   admin 폴더에 추가
+   
+ 3. AdminController.java
+    AdminService.java
+    
+    추가
+
+
   
   
