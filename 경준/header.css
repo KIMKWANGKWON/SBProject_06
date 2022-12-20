@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+@font-face { /* BMJUA 폰트 적용 */
+  font-family: "BMJUA";
+  src: url("../font/BMJUA_ttf.ttf") format("truetype");
+  font-weight: normal;
+} /* 이후 "BMJUA"으로 폰트 적용 가능 */
+
+* {
+  font-family: 'BMJUA';
+}
+
+body {
+	overflow-x : hidden;
+	background-color : #d3d3d3 !important;
+	color : black !important;
+}
+header {
+	position : relative;
+	width : 100vw;
+	height : 5vh;
+	z-index : 1050;
+}
+.gnb {
+	width:80vw;
+ 	height:5vh;
+/* 	position : absolute; */
+	top : 50%;
+	left : 50%;
+	transform:translate(-50%, -1000%);
+}
+.thumImg{
+	width : 200px;
+	height : 200px;
+}
+
+
+
