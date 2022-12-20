@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -139,4 +140,10 @@ public class UserService {
 		 }
 		 reviewRepository.save(reviews);
 	 }
+		
+	public List<Review> findByReview(Long rid) {
+		return reviewRepository.findByReview(rid);
+	}
+	 
+
 }
