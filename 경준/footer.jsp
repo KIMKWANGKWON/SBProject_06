@@ -5,15 +5,24 @@
 </body>
 <footer>
 	<div class="jumbotron">
-		<hr>
+	<hr>
 		<a>공지사항</a> <a>공지사항으로 넣을만한거(커뮤니티 구현시에)</a>
-		<h2><a href="/inquiry/writeQna"><i class="fa-solid fa-font-case">Q&A</i></a></h2>
-		<hr>
+		<h2><a href="/inquiry/writeQna">Q&A</a></h2>
+	<hr>
+	
+	<div class="row">
+	
+	<div class="col-lg-6" align="left">
+	<div class="row">
+		<h1><a href="https://github.com/"><i class="fa-brands fa-github mr-3"></i></a></h1>
+		<h1><a href="https://www.instagram.com/"><i class="fa-brands fa-instagram mr-3"></i></a></h1>
+		<h1><a href="https://www.facebook.com/"><i class="fa-brands fa-facebook mr-3"></i></a></h1>
 	</div>
-	<ul class="list_corp list-group list-group-horizontal">
-		<li class="list-group-item corp_item"><a href="https://www.navercorp.com"
-			data-clk="intronhn">회사소개</a></li>
-		<li class="corp_item"><a href="https://recruit.navercorp.com/"
-			data-clk="recruit">인재채용</a></li>
-	</ul>
+	</div>
+	<div class="col-lg-6" align="right">
+		<a href="https://www.navercorp.com" data-clk="intronhn">회사소개</a>
+		<a href="https://recruit.navercorp.com/" data-clk="recruit">인재채용</a>
+	</div>
+	</div>
+	</div>
 </footer>
