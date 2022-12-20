@@ -55,6 +55,16 @@
     
     추가
 
+==============================
 
+12/20 13:30 update
+
+1. qnaView update
+2. InquiryRepository 20-22 수정
+
+   20 	@Modifying
+	 21   @Query(value = "update inquiry04 set response_id=?2 where id=?1", nativeQuery = true)
+	 22   public void updateInquiry(Long id, Response response); 
+    
   
   
