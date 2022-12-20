@@ -43,6 +43,13 @@ public class InquiryService {
 	
 	public void responseInsert(Response response) {
 		rspRepository.save(response);
-		
+	}
+	
+	public void updateInquiry(Long id, Response response) {
+		iRepository.updateInquiry(id, response);
+	}
+	
+	public void deleteQna(Long id) {
+		iRepository.deleteById(id);
 	}
 }

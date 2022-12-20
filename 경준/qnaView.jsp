@@ -38,6 +38,14 @@
 		<button type="button" class="btn btn-secondary btn-sm" id="btnResponse">답글쓰기</button><hr>
 	</div>
 	</sec:authorize>
+	<sec:authorize access="!hasRole('ROLE_ADMIN')">
+	<table class="table table-borderless">
+		<tr>
+			<td width="10%">답글</td>
+			<td><textarea class="form-control" rows="3" cols="50" id="msg" readonly="readonly">${qna.response.msg }</textarea></td>
+		</tr>
+	</table>
+	</sec:authorize>
 </div>  
 
 <script>

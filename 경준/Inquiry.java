@@ -30,6 +30,7 @@ public class Inquiry {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -42,8 +43,9 @@ public class Inquiry {
 	private String msg;
 	private Long reply;
 	
-	@OneToMany(mappedBy = "inquiry")
-	private List<Response> response;
+	@OneToOne
+	@JoinColumn(name = "response_id")
+	private Response response;
 	
 	@PrePersist
 	public void reply() {

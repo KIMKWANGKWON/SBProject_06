@@ -29,10 +29,27 @@
 					<c:if test="${qna.reply eq 1 }">
 					<td><i class="fa-solid fa-o"></i></td>
 					</c:if>
-					<td><input type="button" class="btn btn-danger btn-sm" value="del"></td>
+					<td><a href="javascript:deleteQna('${qna.id }')">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>	
 	</table>
 	</div>
 </div>
+
+<script>
+function deleteQna(id) {
+	
+	$.ajax({
+		type : "delete",
+		url : "/inquiry/deleteQna/" + id
+	})
+	.done(function() {
+		alert("Q&A 삭제 완료")
+		location.href="/inquiry/myQna/<sec:authentication property='principal.user.id'/>"
+	})
+	.fail(function() {
+		alert("오류")
+	})
+}
+</script>

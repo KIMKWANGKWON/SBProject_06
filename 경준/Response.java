@@ -31,14 +31,14 @@ public class Response {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "Asia/Seoul")
 	private Date regdate;
 	private String msg;
 	
-	@ManyToOne
-	@JoinColumn(name = "inquiry_id")
+	@OneToOne(mappedBy = "response")
 	private Inquiry inquiry;
 	
 }
