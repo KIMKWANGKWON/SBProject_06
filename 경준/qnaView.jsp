@@ -27,36 +27,40 @@
 		</tr>
 	</table>
 	<hr>
-	<sec:authorize access="hasRole('ROLE_ADMIN')">
-	<table class="table table-borderless">
-		<tr>
-			<td width="10%">답글쓰기</td>
-			<td><textarea class="form-control" rows="3" cols="50" id="msg"></textarea></td>
-		</tr>
-	</table>
-	<div align="center">
-		<button type="button" class="btn btn-secondary btn-sm" id="btnResponse">답글쓰기</button><hr>
-	</div>
-	</sec:authorize>
-	<sec:authorize access="!hasRole('ROLE_ADMIN')">
 	<table class="table table-borderless">
 		<tr>
 			<td width="10%">답글</td>
 			<td><textarea class="form-control" rows="3" cols="50" id="msg" readonly="readonly">${qna.response.msg }</textarea></td>
 		</tr>
 	</table>
+	<hr>
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+	<c:if test="${qna.response eq null }">
+	<table class="table table-borderless">
+		<tr>
+			<td width="10%">답글쓰기</td>
+			<td><textarea class="form-control" rows="3" cols="50" id="writeMsg"></textarea></td>
+		</tr>
+	</table>
+	<div align="center">
+		<button type="button" class="btn btn-secondary btn-sm" id="btnResponse">답글쓰기</button><hr>
+	</div>
+	</c:if>
 	</sec:authorize>
+	
+
+	
 </div>  
 
 <script>
 $("#btnResponse").click(function() {
-	if($("#msg").val()=="") {
+	if($("#writeMsg").val()=="") {
 		alert("답글을 입력하세요")
 		return;
 	}
 	var data = {
 		"inquiry_id" : $("#id").val(),
-		"msg" : $("#msg").val()
+		"msg" : $("#writeMsg").val()
 	}
 	$.ajax({
 		type : "post",
