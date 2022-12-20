@@ -122,7 +122,7 @@ public class UserService {
 		return fRepository.isExist(user_id, restaurant_id);
 	}
 	
-
+	//리뷰 파일 업로드
 	 @Transactional 
 	 public void review(Review reviews, MultipartFile f, HttpSession session) {
 		 UUID uuid = UUID.randomUUID();
@@ -140,10 +140,15 @@ public class UserService {
 		 }
 		 reviewRepository.save(reviews);
 	 }
-		
+	
+	//레스토랑 디테일 리뷰 리스트 
 	public List<Review> findByReview(Long rid) {
 		return reviewRepository.findByReview(rid);
 	}
 	 
+	//내 리뷰 보기
+	public List<Review> findByUserReview(Long user_id){
+		return reviewRepository.findByUserReview(user_id);
+	}
 
 }

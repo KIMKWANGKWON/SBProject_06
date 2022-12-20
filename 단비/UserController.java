@@ -140,13 +140,15 @@ public class UserController {
 			uService.fDelete(fid);
 			return "";
 		}
-		
+	
+	//레스토랑 디테일 리뷰 리스트
 	@GetMapping("review/{rid}")
 	public String review(@PathVariable Long rid, Model model) {
 		model.addAttribute("rid", rid);
 		return "/user/review";
 	}
 	
+	//리뷰 작성
 	 @PostMapping("review")
 	 @ResponseBody 
 	 public String review(@RequestPart Review review, @RequestPart MultipartFile file, HttpSession session, @AuthenticationPrincipal PrincipalDetails p) { 
@@ -154,5 +156,11 @@ public class UserController {
 		 return "";
 		 }
 	 
+	 //내 리뷰보기
+	 @GetMapping("userReview/{user_id}")
+	 public String userReview(@PathVariable Long user_id, Model model) {
+		 model.addAttribute("userReview", uService.findByUserReview(user_id));
+		 return "/user/userReview";
+	 }
 	
 }
