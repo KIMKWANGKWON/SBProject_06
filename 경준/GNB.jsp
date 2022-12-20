@@ -54,8 +54,8 @@
       </sec:authorize>
       <sec:authorize access="hasRole('ROLE_ADMIN')">
       <h5 class="dropdown-header">관리자</h5> <!-- 관리자라면 ROLE 미구현됨. -->
-      <a class="dropdown-item" href="#">회원 목록</a>
-      <a class="dropdown-item" href="#">음식점 목록</a>
+      <a class="dropdown-item" href="/admin/memberList">회원 목록</a>
+      <a class="dropdown-item" href="/admin/restaurantList">음식점 목록</a>
       <a class="dropdown-item" href="/inquiry/qnaList">Q&A 목록</a>
       </sec:authorize>
     </div>
