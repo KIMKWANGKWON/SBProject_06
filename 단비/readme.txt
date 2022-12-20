@@ -1,4 +1,4 @@
-list -> 좋아요 위치 변경, 좋아요 리스트에 뿌리기
-
-restaurantList -> 폐업
-OwnerController, RestaurantService
+detail 
+RestaurantController 38번줄 추가
+UserService 144~146번줄 추가
+ReviewRepository 추가
