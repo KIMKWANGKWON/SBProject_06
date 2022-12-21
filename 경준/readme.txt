@@ -1,17 +1,31 @@
-12.21 update
-1. admin/memberList.jsp / 수정
-2. admin/qnaList.jsp / 수정
-3. user/reservationList.jsp 수정
-4. owner/restaurantList.jsp 수정
-5. root.jsp 수정
-6. owner/ownerRerservationList.jsp 추가
-7. GNB.jsp 수정
+=========================================
 
-8. OwnerController.java 93~
-9. InquiryController.java 46
-10. UserService.java 152~
-11. InquiryService.java 56~
-12. ReservationRepository.java 18~
+12.21 15:30 update
+
+1. Review.java
+2. Comment.java
+
+3. Inquiry.java 수정
+4. Response.java 수정
+
+5. User.java 수정
+
+6. InquiryController.java
+  62 - 75 수정
+7. UserController.java
+  121 - 135 추가
+  
+8. InquiryService.java 수정
+9. UserService.java
+  173 - 177 추가
+  
+10. ReviewRepository.java 수정
+11. InquiryRepository.java 수정
+
+12. detail.jsp 수정
+  
+  
+  
 =============================================
 
 
