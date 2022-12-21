@@ -28,17 +28,27 @@
       		</c:forEach>
     	</tbody>
   	</table>
-  	<div class="d-flex justify-content-between">
-  	<ul class="pagination mt-3">
-  	<c:if test="${favorites.first==false }">
-  		<li class="page-item"><a class="page-link" href="?page=${favorites.number-1 }">이전</a></li>
-  	</c:if>
+
   	
-  	<c:if test="${favorites.last==false }">
-  		<li class="page-item"><a class="page-link" href="?page=${favorites.number+1 }">다음</a></li>
+  	<ul class="pagination justify-content-center">
+	<fmt:formatNumber type="number" maxFractionDigits="0"  value="${((favorites.pageable.pageNumber) / 3 - ((favorites.pageable.pageNumber) / 3) % 1)}" var="start"/>
+    <c:if test="${favorites.pageable.pageNumber >= 3 }">
+    <li class="page-item"><a class="page-link" 
+    href="/user/favorites/<sec:authentication property="principal.user.id"/>?page=${start * 3 - 3}">Previous</a></li>
+    </c:if>
+    <c:forEach 
+    begin="${start * 3 }" 
+    end="${start * 3 + 2 }" var="page">
+    <c:if test="${page+1 <= favorites.totalPages }">
+    <li class="page-item"><a class="page-link" 
+    href="/user/favorites/<sec:authentication property="principal.user.id"/>?page=${page}">${page+1}</a></li>
+    </c:if>
+    </c:forEach>
+    <c:if test="${start * 3 + 3 < favorites.totalPages}">
+    <li class="page-item"><a class="page-link" 
+    href="/user/favorites/<sec:authentication property="principal.user.id"/>?page=${start * 3 + 3}">Next</a></li>
   	</c:if>
-  	</ul>
-  	</div>
+ </ul>	
 </div>
 
 <script>
