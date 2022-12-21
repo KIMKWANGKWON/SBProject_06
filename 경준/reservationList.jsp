@@ -17,7 +17,7 @@
 			</tr>
 		</thead>
 		<tbody align="center">
-			<c:forEach items="${reservations}" var="rsv">
+			<c:forEach items="${reservations.content}" var="rsv">
 				<tr>
 					<td><img src="${rsv.restaurant.thumImage}"></td>
 					<td>${rsv.restaurant.name}</td>
@@ -65,4 +65,15 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	
+	<div class="d-flex justify-content-center mt-5 mr-auto">
+		<ul class="pagination">
+			<c:if test="${reservations.first==false}">
+				<li class="page-item"><a class="page-link" href="?page=${reservations.number-1}">이전</a>
+			</c:if>
+			<c:if test="${reservations.last==false}">
+				<li class="page-item"><a class="page-link" href="?page=${reservations.number+1}">다음</a>
+			</c:if>
+		</ul>
+	</div>
 </div>

@@ -3,7 +3,7 @@
 <%@ include file ="../include/header.jsp" %>
 
 <div class="container">
-	<h1 align="center"><i class="fa-solid fa-font-case"><sec:authentication property="principal.user.nickname"/>님의 Q&A</i></h1>
+	<h1 align="center"><sec:authentication property="principal.user.nickname"/>님의 Q&A</h1>
 	<div class="mt-5">
 	<table class="table table-hover">
 		<thead>
@@ -17,7 +17,7 @@
 			</tr>
 		</thead>
 	 	<tbody>		
-			<c:forEach items="${qna}" var="qna">
+			<c:forEach items="${qna.content}" var="qna">
 				<tr align="center">
 					<td>${qna.id}</td>
 					<td><a href="/inquiry/qnaView/${qna.id}">${qna.title}</a></td>
@@ -35,6 +35,18 @@
 		</tbody>	
 	</table>
 	</div>
+	
+	<div class="d-flex justify-content-center mt-5 mr-auto">
+		<ul class="pagination">
+			<c:if test="${qna.first==false}">
+				<li class="page-item"><a class="page-link" href="?page=${qna.number-1}">이전</a>
+			</c:if>
+			<c:if test="${qna.last==false}">
+				<li class="page-item"><a class="page-link" href="?page=${qna.number+1}">다음</a>
+			</c:if>
+		</ul>
+	</div>
+	
 </div>
 
 <script>

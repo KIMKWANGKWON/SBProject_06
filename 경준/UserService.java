@@ -9,6 +9,8 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +39,7 @@ public class UserService {
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	private final ReviewRepository reviewRepository;
 	private final CommentRepository cRepository;
+	
 	@Transactional
 	public String join(User user) {
 		if (uRepository.findByUsername(user.getUsername()) != null) {
@@ -54,7 +57,7 @@ public class UserService {
 	public List<Favorites> findByUser_id(Long user_id) {
 		return fRepository.findByUser_id(user_id);
 	}
-
+	
 	@Transactional
 	public void update(User user) {
 		User u = uRepository.findById(user.getId()).get();
@@ -79,7 +82,12 @@ public class UserService {
 	public List<Reservations> findByUid(Long uid) {
 		return rsvRepository.findByUser_id(uid);
 	}
-
+	
+	public Page<Reservations> findByUid(Pageable pageable, Long uid) {
+		Page<Reservations> lists = rsvRepository.findByUser_id(pageable, uid);
+		return lists;
+	}
+	
 	public Reservations findRsv(Long rsvid) {
 		return rsvRepository.findById(rsvid).get();
 	}

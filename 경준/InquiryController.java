@@ -1,5 +1,9 @@
 package restaurant.controller;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -48,8 +52,11 @@ public class InquiryController {
 	}
 	
 	@GetMapping("myQna/{id}")
-	public String myQna(Model model, @PathVariable Long id) {
-		model.addAttribute("qna", iService.findByUser_id(id));
+	public String myQna(Model model, @PathVariable Long id,
+			  @PageableDefault(size = 10, sort = "regdate",
+			  direction = Direction.DESC) Pageable pageable) {
+		Page<Inquiry> lists = iService.findByUser_id(id, pageable);
+		model.addAttribute("qna", lists);
 		return "/inquiry/myQna";
 	}
 	

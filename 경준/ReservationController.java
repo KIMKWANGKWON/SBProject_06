@@ -3,6 +3,10 @@ package restaurant.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -14,12 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import restaurant.config.auth.PrincipalDetails;
 import restaurant.model.Reservations;
-import restaurant.repository.UserRepository;
 import restaurant.service.RestaurantService;
 import restaurant.service.UserService;
 
@@ -28,10 +32,8 @@ import restaurant.service.UserService;
 @PreAuthorize("isAuthenticated()")
 @RequiredArgsConstructor
 public class ReservationController {
-	
 	//주입
 	private final UserService uService;
-	
 	private final RestaurantService rService;
 	
 	//예약화면
@@ -42,23 +44,27 @@ public class ReservationController {
 	}
 	
 	//예약진행
-	@PostMapping("reservation/{rid}")
-	@ResponseBody
-	public String reservation(@RequestBody Reservations reservations, 
-							  @PathVariable Long rid,
-							  @AuthenticationPrincipal PrincipalDetails p) throws ParseException {
-		String str = reservations.getRsvDate() + " " + reservations.getRsvTime();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		reservations.setRsvDateTime(sdf.parse(str));
-		
-		uService.reservation(reservations, rid, p);
-		return "success";
-	}
+		@PostMapping("reservation/{rid}")
+		@ResponseBody
+		public String reservation(@RequestBody Reservations reservations, 
+								  @PathVariable Long rid,
+								  @AuthenticationPrincipal PrincipalDetails p) throws ParseException {
+			String str = reservations.getRsvDate() + " " + reservations.getRsvTime();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			reservations.setRsvDateTime(sdf.parse(str));
+			
+			uService.reservation(reservations, rid, p);
+			return "success";
+		}
 	
 	//예약목록보기
 	@GetMapping("reservationList/{uid}")
-	public String reservationList(@PathVariable Long uid, Model model) {
-		model.addAttribute("reservations", uService.findByUid(uid));
+	public String reservationList(@PathVariable Long uid, 
+								  Model model,
+								  @PageableDefault(size = 10, sort = "regdate",
+								  direction = Direction.DESC) Pageable pageable) {
+		Page<Reservations> lists = uService.findByUid(pageable, uid);
+		model.addAttribute("reservations", lists);
 		return "/user/reservationList";
 	}
 	
@@ -73,7 +79,12 @@ public class ReservationController {
 	@PutMapping("reservationUpdate")
 	@ResponseBody
 	public String reservationUpdate(@RequestBody Reservations reservations) {
-		uService.updateRsv(reservations);
+		try {
+			uService.updateRsv(reservations);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "success";
 	}
 	
