@@ -1,0 +1,19 @@
+<ul class="pagination justify-content-center">
+	<fmt:formatNumber type="number" maxFractionDigits="0"  value="${((uPage.pageable.pageNumber) / 3 - ((uPage.pageable.pageNumber) / 3) % 1)}" var="start"/>
+    <c:if test="${uPage.pageable.pageNumber >= 3 }">
+    <li class="page-item"><a class="page-link" 
+    href="/user/userReview/<sec:authentication property="principal.user.id"/>?page=${start * 3 - 3}">Previous</a></li>
+    </c:if>
+    <c:forEach 
+    begin="${start * 3 }" 
+    end="${start * 3 + 2 }" var="page">
+    <c:if test="${page+1 <= uPage.totalPages }">
+    <li class="page-item"><a class="page-link" 
+    href="/user/userReview/<sec:authentication property="principal.user.id"/>?page=${page}">${page+1}</a></li>
+    </c:if>
+    </c:forEach>
+    <c:if test="${start * 3 + 3 < uPage.totalPages}">
+    <li class="page-item"><a class="page-link" 
+    href="/user/userReview/<sec:authentication property="principal.user.id"/>?page=${start * 3 + 3}">Next</a></li>
+  	</c:if>
+ </ul>	
