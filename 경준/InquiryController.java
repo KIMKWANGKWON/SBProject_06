@@ -43,7 +43,8 @@ public class InquiryController {
 	@GetMapping("qnaList")
 	public String qnaList(Model model) {
 		model.addAttribute("qna", iService.findAll());
-		return "/inquiry/qnaList";
+		model.addAttribute("count", iService.countQna());
+		return "/admin/qnaList";
 	}
 	
 	@GetMapping("myQna/{id}")

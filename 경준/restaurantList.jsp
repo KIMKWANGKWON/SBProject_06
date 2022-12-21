@@ -1,62 +1,87 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ include file="../include/header.jsp" %>
-
-<div class="container mt-3">
-	<h3 align="center">음식점 목록 (<span id="cntSpan">${count}</span>)</h3>
-	<table class="table table-hover">
-		<thead>
-			<tr align="center">
-				<th>Restaurant</th>
-				<th>Owner</th>
-				<th>Address</th>
-				<th>Tel</th>
-				<th>URL</th>
-				<th>Regdate</th>
-				<th>Enabled</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-		<c:forEach items="${restaurant}" var="rst">
-			<tr align="center">
-				<td><a href = "/admin/restaurantView/${rst.id}">${rst.name}</a></td>
-				<td><a href = "/admin/memberView/${rst.owner.id}">${rst.owner.nickname}</a></td>
-				<td>${rst.address }</td>
-				<td>${rst.tel }</td>
-				<td>${rst.url }</td>
-				<td><fmt:formatDate value="${rst.regdate}" pattern="yyyy-MM-dd"/></td>
-				<c:choose>
-					<c:when test="${rst.enabled eq true }">
-						<c:set var="str" value="게시 중"/>
-					</c:when>
-					<c:when test="${rst.enabled eq false }">
-						<c:set var="str" value="게시 대기"/>
-					</c:when>
-				</c:choose>
-				<td>${str }</td>
-				<td><input type="button" class="btn btn-outline-danger btn-sm" value="Delete" onclick="rdel('${rst.id}')"></td>
-			</tr>
-		</c:forEach>
-		</tbody>
-	</table>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="../include/header.jsp"%>
+<div class="row">
+<div class="col-2"></div>
+<div class="col-8">
+	<h2>내 식당 관리</h2>
+	<a href="/owner/register">식당 추가</a>
+	<hr/>
+	<div class="table-responsive">
+	    <table class="table table-bordered">
+	      <thead>
+	        <tr>
+	          <th>#</th>
+	          <th>대표 사진</th>
+	          <th>식당명</th>
+	          <th>주소</th>
+	          <th>전화번호</th>
+	          <th>운영시간</th>
+	          <th>옵션</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	      <c:forEach items="${restaurantList }" var="restaurant" varStatus="st">
+	        <tr>
+	          <td>${st.count }</td>
+	          <td><img class="thumImg" src="${restaurant.thumImage }"/></td>
+	          <td><a href="/restaurant/view/${restaurant.id }">${restaurant.name }</a></td>
+	          <td>${restaurant.address }</td>
+	          <td>${restaurant.tel }</td>
+	          <td>${restaurant.openTime } : ${restaurant.closeTime }<br/>
+	          	  예약 마감 시간 : ${restaurant.rsvTime }</td>
+	          <td>
+	          	<button type="button" onclick="location.href='/owner/update/${restaurant.id}'">정보수정</button>
+	          	<button type="button" onclick="rClose('${restaurant.id}')">
+					<i class="fa-solid fa-trash"></i></button>
+	          	<button type="button" onclick="enable(this,1)" data-id="${restaurant.id }">
+	          		<i class="fa-solid fa-toggle-on"></i></button>
+	          	<button type="button" onclick="enable(this,0)" data-id="${restaurant.id }">
+	          		<i class="fa-solid fa-eye-slash"></i></button>
+	          </td>
+	        </tr>
+	      </c:forEach>
+	      </tbody>
+	    </table>
+	  </div>
 </div>
-
+<div class="col-2"></div>
+</div>
 <script>
-	function rdel(id) {
-		if(!confirm("정말 삭제하겟습니까?")) {
-			return false;
+var enable = function(btn,enabled){
+	$.ajax({
+		type : "PUT",
+		url : "/owner/setEnable",
+		data : {
+			"id" : btn.dataset.id,
+			"enabled" : enabled
 		}
-		$.ajax({
-			type : "delete",
-			url : "/admin/restaurantDelete/" + id
-		})
-		.done(function() {
-			alert("삭제 성공")
-			location.href = "/admin/restaurantList"
-		})
-		.fail(function() {
-			alert("삭제 실패")
-		})
-	}
+// 		contentType : "application/json;charset=utf-8"
+	})
+	.done(function(resp){
+		if(enabled == 1){
+			alert("개시했습니다.")
+		} else{
+			alert("개시하지 않습니다.")
+		}
+	})
+	.fail(function(e){
+		alert("Error : " + e);
+	})
+} 
+
+var rClose = function (id){
+	$.ajax({
+		type:"delete",
+		url:"/owner/close/"+id
+	})
+	.done(function(resp){
+		location.href="/owner/restaurantList/<sec:authentication property="principal.user.id"/>";
+	})
+	.fail(function(e){
+		alert("가게 삭제 실패")
+	})
+}
+
 </script>
+<%@ include file="../include/footer.jsp"%>

@@ -1,23 +1,29 @@
 package restaurant.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import restaurant.config.auth.PrincipalDetails;
 import restaurant.model.Favorites;
 import restaurant.model.Reservations;
 import restaurant.model.Restaurant;
+import restaurant.model.Review;
 import restaurant.model.User;
 import restaurant.repository.FavoritesRepository;
 import restaurant.repository.ReservationsRepository;
+import restaurant.repository.ReviewRepository;
 import restaurant.repository.UserRepository;
 
 @Service
@@ -27,7 +33,7 @@ public class UserService {
 	private final FavoritesRepository fRepository;
 	private final ReservationsRepository rsvRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+	private final ReviewRepository reviewRepository;
 	
 	@Transactional
 	public String join(User user) {
@@ -58,10 +64,9 @@ public class UserService {
 	}
 	
 	@Transactional
-	public void reservation(Reservations reservations, Long rid, PrincipalDetails p) {
+	public void reservation(Reservations reservations, Long rid,PrincipalDetails p) {
 		Restaurant r = new Restaurant();
 		r.setId(rid);
-		
 		reservations.setRestaurant(r);
 		reservations.setUser(p.getUser());
 		rsvRepository.save(reservations);
@@ -113,5 +118,44 @@ public class UserService {
 	
 	public Favorites findLike(Long user_id, Long restaurant_id) {
 		return fRepository.isExist(user_id, restaurant_id);
+	}
+	
+	//리뷰 파일 업로드
+	 @Transactional 
+	 public void review(Review reviews, MultipartFile f, HttpSession session) {
+		 UUID uuid = UUID.randomUUID();
+		 if(!f.getOriginalFilename().equals("empty")) {
+			 String uploadFolder = session.getServletContext().getRealPath("/") + "reviewImg";
+			 String uploadFileName = uuid.toString() + "_" + f.getOriginalFilename();
+			 File saveFile = new File(uploadFolder, uploadFileName);
+			 try {
+				 f.transferTo(saveFile);
+				 reviews.setThumImage("\\reviewImg\\"+uploadFileName);
+			 } catch (IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		 }
+		 reviewRepository.save(reviews);
+	 }
+	
+	//레스토랑 디테일 리뷰 리스트 
+	public List<Review> findByReview(Long rid) {
+		return reviewRepository.findByReview(rid);
+	}
+	 
+	//내 리뷰 보기
+	public List<Review> findByUserReview(Long user_id){
+		return reviewRepository.findByUserReview(user_id);
+	}
+	
+	// owner 식당 예약 현황 보기
+	public List<Reservations> findRsvByOid(Long owner_id) {
+		return rsvRepository.findRsvByOid(owner_id);
+	}
+	
+	// owner 식당 예약 숫자
+	public Long countRsvByOid(Long owner_id) {
+		return rsvRepository.countRsvByOid(owner_id);
 	}
 }

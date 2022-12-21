@@ -36,7 +36,7 @@ public class InquiryService {
 	public Inquiry findById(Long id) {
 		return iRepository.findById(id).get();
 	}
-	
+
 	public void updateReply(Long id) {
 		iRepository.updateReply(id);
 	}
@@ -51,5 +51,9 @@ public class InquiryService {
 	
 	public void deleteQna(Long id) {
 		iRepository.deleteById(id);
+	}
+	
+	public Long countQna() {
+		return iRepository.count();
 	}
 }

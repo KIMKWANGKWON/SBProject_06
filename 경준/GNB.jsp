@@ -7,20 +7,14 @@
 <div class="gnb  fixed-top">
 <nav class="navbar navbar-expand-sm mb-3">
   <a class="navbar-brand mr-auto" href="/">
-<!--     <img src="bird.jpg" alt="Logo" style="width:40px;"> -->
+<!-- <img src="bird.jpg" alt="Logo" style="width:40px;"> -->
     <b>루트</b>
   </a>
   <!-- Links -->
   <div id="defNav">
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="#">식당 목록</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">커뮤니티</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">기타 및 문의	</a>
+      <a class="nav-link" href="/inquiry/writeQna">Q&A</a>
     </li>
     </ul>
    </div>
@@ -46,15 +40,16 @@
       <a href="/user/mypage/<sec:authentication property="principal.user.id"/>">마이페이지</a>
       </h5>
       <a class="dropdown-item" href="/user/favorites/<sec:authentication property="principal.user.id"/>">즐겨찾기</a>
-      <a class="dropdown-item" href="/user/reservationList/<sec:authentication property="principal.user.id"/>">예약 현황</a>
+      <a class="dropdown-item" href="/user/reservationList/<sec:authentication property="principal.user.id"/>">예약현황</a>
       <a class="dropdown-item" href="/logout">로그아웃</a>
       <sec:authorize access="hasRole('ROLE_OWNER')">
       <h5 class="dropdown-header">식당 관리</h5> <!-- 사업자라면 ROLE 미구현됨. -->
       <a class="dropdown-item" href="/owner/restaurantList/<sec:authentication property="principal.user.id"/>">내 식당 보기</a>
+      <a class="dropdown-item" href="/owner/reservationList/<sec:authentication property="principal.user.id"/>">내 식당 예약</a>
       </sec:authorize>
-      <sec:authorize access="hasRole('ROLE_ADMIN')">
+	  <sec:authorize access="hasRole('ROLE_ADMIN')">
       <h5 class="dropdown-header">관리자</h5> <!-- 관리자라면 ROLE 미구현됨. -->
-      <a class="dropdown-item" href="/admin/memberList">회원 목록</a>
+ 	  <a class="dropdown-item" href="/admin/memberList">회원 목록</a>
       <a class="dropdown-item" href="/admin/restaurantList">음식점 목록</a>
       <a class="dropdown-item" href="/inquiry/qnaList">Q&A 목록</a>
       </sec:authorize>

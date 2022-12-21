@@ -3,8 +3,7 @@
 <%@ include file ="../include/header.jsp" %>
 
 <div class="container">
-	<h1 align="center"><i class="fa-solid fa-font-case">Q&A</i></h1>
-	<div class="mt-5">
+	<h2 align="center">Q&A목록(${count })</h2>
 	<table class="table table-hover">
 		<thead>
 			<tr align="center">

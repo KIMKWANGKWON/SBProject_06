@@ -12,6 +12,7 @@
 				<th>예약날짜</th>
 				<th>예약시간</th>
 				<th>예약변경</th>
+				<th>후기작성</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -23,10 +24,12 @@
 					<td><fmt:formatDate value="${rsv.rsvDateTime}" pattern="yyyy-MM-dd"/></td>
 					<td><fmt:formatDate value="${rsv.rsvDateTime}" pattern="HH:mm"/></td>
 					<td><a href="/user/reservationUpdate/${rsv.id}"><button type="button" class="btn btn-primary" id="updateRsv">예약 변경</button></a></td>
-					<td><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo${rsv.id }">예약내용 상세보기</button></td>
+					<td><a href="/user/review/${rsv.restaurant.id}"><button type="button" class="btn btn-danger" id="review">후기 작성</button></a>
+					<td><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo${rsv.id }"><i class="fa-solid fa-magnifying-glass"></i></button></td>
+					
 				</tr>
 				<tr>
-				<td colspan="6">  
+				<td colspan="7">  
   				<div id="demo${rsv.id }" class="collapse">
     				<div class="card" style="width:100%">	<!-- 예약정보 -->
   						<div class="row" align="center">
