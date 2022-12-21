@@ -1,28 +1,23 @@
 =========================================
 
-12.21 15:30 update
+12.21 17:40 update
 
-1. Review.java
-2. Comment.java
+1. user/reservationList.jsp
+    
+2. inquiry/myQna.jsp
 
-3. Inquiry.java 수정
-4. Response.java 수정
-
-5. User.java 수정
-
-6. InquiryController.java
-  62 - 75 수정
-7. UserController.java
-  121 - 135 추가
-  
-8. InquiryService.java 수정
-9. UserService.java
-  173 - 177 추가
-  
-10. ReviewRepository.java 수정
-11. InquiryRepository.java 수정
-
-12. detail.jsp 수정
+3. InquiryController.java
+    54~61 번 줄 수정
+4. InquiryService.java
+    31~34 번 줄 수정
+5. InquiryRepository.java
+    18 번 줄 추가
+6. ReservationController.java
+    61~69 번 줄 수정
+7. UserService.java
+    86~89 번 줄 수정
+8. ReservationRepository.java
+    16 번 줄 추가
   
   
   
