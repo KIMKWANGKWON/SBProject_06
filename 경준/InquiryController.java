@@ -65,11 +65,13 @@ public class InquiryController {
 	public String responseInsert(@PathVariable Long id,
 								 @RequestBody Response response,
 								 @AuthenticationPrincipal PrincipalDetails p) {
-		
+		Inquiry i = new Inquiry();
+		i.setId(id);
+		response.setInquiry(i);
 		response.setUser(p.getUser());
 		iService.responseInsert(response);
 		iService.updateReply(id);
-		iService.updateInquiry(id, response);
+		
 		return "success";
 		
 	}

@@ -3,6 +3,7 @@ package restaurant.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 @Getter @Setter
 @Entity
-@Table(name = "user_04")
+@Table(name = "user")
 public class User {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -36,15 +37,21 @@ public class User {
 	private String password;
 	private String role;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Favorites> favorites;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user" ,cascade = CascadeType.REMOVE)
 	private List<Reservations> reservations;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user" ,cascade = CascadeType.REMOVE)
 	private List<Inquiry> inquiry;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user" ,cascade = CascadeType.REMOVE)
 	private List<Response> response;
+	
+	@OneToMany(mappedBy = "owner",cascade = CascadeType.REMOVE)
+	private List<Restaurant> restaurants;
+	
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
+	private List<Comment> comments;
 }

@@ -14,10 +14,7 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
 	public List<Inquiry> findByUser_id(Long id);
 	
 	@Modifying
-	@Query(value = "update inquiry04 set reply=1 where id=?1", nativeQuery = true)
+	@Query(value = "update inquiry set reply=1 where id=?1", nativeQuery = true)
 	public void updateReply(Long id);
 	
-	@Modifying
-	@Query(value = "update inquiry04 set response_id=?1 where id=?2", nativeQuery = true)
-	public void updateInquiry(Long id, Response response);
 }

@@ -2,6 +2,7 @@ package restaurant.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,7 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@Table(name = "response04")
+@Table(name = "response")
 public class Response {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +39,8 @@ public class Response {
 	private Date regdate;
 	private String msg;
 	
-	@OneToOne(mappedBy = "response")
+	@OneToOne
+	@JoinColumn(name = "inquiry_id")
 	private Inquiry inquiry;
 	
 }
