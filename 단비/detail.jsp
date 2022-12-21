@@ -74,7 +74,6 @@
 				</table>
 				<div>
 					<input type="button" class="btn btn-info" id="goReservation" value="예약하기">
-					<input type="button" class="btn btn-secondary" id="like" value="좋아요">
 				</div>
 			</div>
     	</div>  

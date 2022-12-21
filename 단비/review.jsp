@@ -85,7 +85,11 @@ $("#btnReview").click(function(){
 			"rating" : $('input[name=reviewStar]:checked').val(),
 			"content" :$("#content").val()
 	}
-	formData.append('file',form);
+	if(form == null){
+		formData.append('file', new File(["empty"],"empty"));
+	} else {
+		formData.append('file',form);
+	}
 	formData.append('review',new Blob([JSON.stringify(dataParam)], {type :"application/json"}));
 	
 	
@@ -99,11 +103,11 @@ $("#btnReview").click(function(){
 		
 	})
 	.done(function(resp){
-		alert("넣기 성공 ㅜㅜㅜ")
-			
+		alert("리뷰 작성 완료")
+		location.href="/"	
 	})
 	.fail(function(e){
-		alert("실패...")
+		alert("리뷰 작성 실패")
 	})
 })
 </script>

@@ -15,13 +15,13 @@
     text-align: right;
 }
 #myform .empty{
-    font-size: 2em;
+    font-size: 1.2em;
      color: transparent; 
      text-shadow: 0 0 0 #f0f0f0; 
 }
 
 #myform .full{
-    font-size: 2em;
+    font-size: 1.2em;
      text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
 
@@ -47,7 +47,7 @@
 						<img class="img-fluid" src="${review.thumImage }">
 						</div>
 						</td>
-						<td>${review.user.id }</td>
+						<td>${review.user.nickname }</td>
 						<td>${review.content }<td>
 						<td>
 						<div id="myform">
@@ -61,9 +61,9 @@
 						<label for="rate1" class="empty">⭐</label>
 						</c:forEach>
 						</fieldset>
-						
 						</div>
 						</td>
+						<td><button type="button" class="btn btn-danger" onclick="reviewDelete('${review.id}')">삭제</button></td>
 					</tr>
 					</c:forEach>
 				</table>
@@ -73,3 +73,24 @@
 	</form>
 
   	</div> <!-- comment Container -->
+  	
+<script>
+var reviewDelete = function(id){
+	if(!confirm("리뷰를 삭제하시면 재작성이 불가합니다. 삭제하시겠습니까?")){
+		return false;
+	}
+	$.ajax({
+		type:"delete",
+		url:"/user/reviewDelete/" + id,
+		success:function(resp){
+			if(resp=="success"){
+				alert("삭제되었습니다")
+				location.href="/user/userReview/<sec:authentication property='principal.user.id'/>"
+			}
+		},
+		error:function(e){
+			alert("내부 문제로 인해 리뷰 삭제가 불가능합니다")
+		}
+	})
+}
+</script>

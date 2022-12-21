@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -35,7 +34,6 @@ public class UserService {
 	private final ReservationsRepository rsvRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	private final ReviewRepository reviewRepository;
-	
 	
 	@Transactional
 	public String join(User user) {
@@ -126,7 +124,7 @@ public class UserService {
 	 @Transactional 
 	 public void review(Review reviews, MultipartFile f, HttpSession session) {
 		 UUID uuid = UUID.randomUUID();
-		 if(f!=null) {
+		 if(!f.getOriginalFilename().equals("empty")) {
 			 String uploadFolder = session.getServletContext().getRealPath("/") + "reviewImg";
 			 String uploadFileName = uuid.toString() + "_" + f.getOriginalFilename();
 			 File saveFile = new File(uploadFolder, uploadFileName);
@@ -145,10 +143,15 @@ public class UserService {
 	public List<Review> findByReview(Long rid) {
 		return reviewRepository.findByReview(rid);
 	}
+	
+	//리뷰 삭제
+	public void reviewDelete(Long id) {
+		reviewRepository.deleteById(id);
+	}
+
 	 
 	//내 리뷰 보기
 	public List<Review> findByUserReview(Long user_id){
 		return reviewRepository.findByUserReview(user_id);
 	}
-
 }
