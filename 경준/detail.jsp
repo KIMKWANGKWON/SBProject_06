@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file ="../include/header.jsp" %>
 
+
 <style>
 	.restaurant_image{
 		width: 40%
@@ -9,7 +10,33 @@
 		margin-left: 30px;
 		width: 50%
 	}
+	
+	.review_image{
+		width: 40%
+	}
+#myform fieldset{
+    display: inline-block;
+    direction: ltr;
+    border:0;
+}
+#myform fieldset legend{
+    text-align: right;
+}
+#myform .empty{
+    font-size: 3em;
+     color: transparent; 
+     text-shadow: 0 0 0 #f0f0f0; 
+}
+
+#myform .full{
+    font-size: 3em;
+     text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+
+
 </style>
+
 <div class="container">
 	<h2 align="left">${restaurant.name }
 		<a href="javascript:like(this)"><span id="showLike">
@@ -21,7 +48,7 @@
 			</c:if>
 		</span></a></h2>
 	<input type="hidden" value="${restaurant.id }">
-  	<div class="container-fluid">
+	<div class="container-fluid">
     	<div class="row" align="center">
       		<div class="restaurant_image">
 				<img class="img-fluid" src="${restaurant.thumImage }" alt="food">
@@ -38,7 +65,8 @@
 					</tr>
 					<tr>
 						<td>운영시간</td>
-						<td>${restaurant.hours }</td>
+						<td>${restaurant.openTime } ~ ${restaurant.closeTime}<br/>
+							예약 마감 시간 : ${restaurant.rsvTime }</td>
 					</tr>
 					<tr>
 						<td>홈페이지</td>
@@ -51,6 +79,7 @@
 			</div>
     	</div>  
   	</div>
+
 	<hr>
   	<div class="container-fluid">
     	<div class="row" align="center">
@@ -60,8 +89,9 @@
     	</div>  
   	</div>
   	<hr>
+  	
   	<div id="menuResult">
-  	<table class='table table-borderless'>
+  	<table class='table table-hover'>
 			<thead>
 				<tr align='center'>
 				<th>메뉴</th>
@@ -82,14 +112,94 @@
   	</tbody>
   	</table>
   	</div>
+  	
   	<div id="descriptionResult">
   	<h4>${restaurant.description }</h4>
   	</div>
+  	
   	<div id="commentResult">
-  	</div>
+
+		<div class="container">
+      		<div class="review_list">
+				<table class="table table-hover">
+			
+					<tr align="center">
+						<th>사진</th>
+						<th>작성자</th>
+						<th>평점</th>
+						<th>리뷰</th>
+						<sec:authorize access="hasRole('ROLE_OWNER')">
+						<c:if test="${restaurant.owner.id eq sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}">
+						<th></th>
+						</c:if>
+						</sec:authorize>
+					</tr>
+					
+					<c:forEach items="${reviewList }" var = "review">
+					<tr align="center">
+						<td>
+						<div class="review_image">
+						<img class="img-fluid" src="${review.thumImage }">
+						</div>
+						</td>
+						<td>${review.user.nickname }</td>
+						
+						<td>
+						<div id="myform">
+						
+						<fieldset>
+						<c:forEach begin="1" end="${review.rating}" step="1">
+						<label for="rate1" class="full">⭐</label>
+						</c:forEach>
+						
+						<c:forEach begin="${review.rating+1 }" end="5" step="1">
+						<label for="rate1" class="empty">⭐</label>
+						</c:forEach>
+						</fieldset>
+						
+						</div>
+						</td>
+						<td>${review.content }</td>
+						
+						<sec:authorize access="hasRole('ROLE_OWNER')">
+
+ 						<c:if test="${restaurant.owner.id eq sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}">
+						<td><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo${review.id }">
+						답글</button></td>
+						</c:if>
+						</sec:authorize>
+					</tr>
+					
+					<tr>
+						<td></td>
+						<td colspan="4">
+    					${review.comment.msg }
+  						</td>
+  					</tr>
+  					<sec:authorize access="hasRole('ROLE_OWNER')">
+  					<c:if test="${review.comment.id eq null }">
+					<tr><td></td>
+						<td colspan="3"><div id="demo${review.id }" class="collapse">
+    					<textarea id="msg" class=form-control>└   </textarea>
+  						</div></td>
+  						<td><div id="demo${review.id }" class="collapse">
+  						<input type="button" class="btn btn-primary" onclick="javascript:commentInsert('${review.id}')" value="입력"></div></td>
+  					</tr>
+  					</c:if>
+  					</sec:authorize>
+					</c:forEach>
+				</table>
+				
+			</div> <!-- review_list --> 
+
+  		</div> <!-- comment Container -->
+	</div> <!-- comment -->
 </div>
+
 <script src="/js/detail.js"></script>
 <script>
+$("fieldset > input:radio[value='${review.rating}']").attr("checked",true);
+
 //좋아요
 var like = function(input){
 	<sec:authorize access="isAuthenticated()">
@@ -126,6 +236,29 @@ $("#goReservation").click(function() {
 	</sec:authorize>
 	alert("로그인이 필요한 서비스입니다.");
 })
+
+function commentInsert(id) {
+	if($("#msg").val()=="") {
+		alert("답글을 입력하세요")
+		return;
+	}
+	var data = {
+		"msg" : $("#msg").val()
+	}
+	$.ajax({
+		type : "post",
+		url : "/user/commentInsert/" + id,
+		contentType : "application/json;charset=utf-8",
+		data : JSON.stringify(data)
+	})
+	.done(function() {
+		alert("good")
+	})
+	.fail(function() {
+		alert("오류")
+	})
+}
+	
 //디폴트
 show("menuResult")
 </script>
