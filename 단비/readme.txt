@@ -1,4 +1,4 @@
-favorites.jsp 17~41번 줄 변경
+favorites.jsp
 
 UserController.java 88~96번 줄 변경
 
