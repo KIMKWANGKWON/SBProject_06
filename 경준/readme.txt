@@ -1,3 +1,8 @@
+12.21 update
+1. memberList.jsp
+
+=============================================
+
 12.20 update
 
 1. controller
