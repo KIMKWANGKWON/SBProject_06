@@ -1,5 +1,5 @@
 		<ul class="pagination justify-content-center">
-			<fmt:formatNumber type="number" maxFractionDigits="0"  value="${((reservations.pageable.pageNumber) / 3 - ((reservations.pageable.pageNumber) / 3) % 1)}" var="start"/>
+			<fmt:formatNumber type="number" maxFractionDigits="0" groupingUsed="false" value="${((reservations.pageable.pageNumber) / 3 - ((reservations.pageable.pageNumber) / 3) % 1)}" var="start"/>
 
 		    <li class="page-item <c:if test="${reservations.pageable.pageNumber < 3 }">disabled</c:if>"><a class="page-link" 
 		    href="/user/reservationList/<sec:authentication property="principal.user.id"/>?page=${start * 3 - 3}">Previous</a></li>
@@ -11,6 +11,6 @@
 		    href="/user/reservationList/<sec:authentication property="principal.user.id"/>?page=${page}">${page+1}</a></li>
 		    </c:if>
 		    </c:forEach>
-		    <li class="page-item <c:if test="${reservations.pageable.pageNumber >= 3 }">disabled</c:if>"><a class="page-link" 
+		    <li class="page-item <c:if test="${start * 3 + 3 >= reservations.totalPages }">disabled</c:if>"><a class="page-link" 
 		    href="/user/reservationList/<sec:authentication property="principal.user.id"/>?page=${start * 3 + 3}">Next</a></li>
 		 </ul>
