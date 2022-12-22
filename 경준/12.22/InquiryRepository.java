@@ -24,11 +24,19 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
 	public void updateReply(Long id);
 	
 	
-	@Query(value = "SELECT * FROM inquiry where title like CONCAT('%', :word, '%') order by regdate desc",
+	@Query(value = "SELECT i.* FROM inquiry as i inner join user as u ON i.user_id = u.id where u.nickname like CONCAT('%', :word, '%') order by regdate desc",
 		   nativeQuery = true)
 	public Page<Inquiry> userSearch(Pageable pageable, @Param("word") String word);
+	
+	@Query(value = "SELECT * FROM inquiry where title like CONCAT('%', :word, '%') order by regdate desc",
+			   nativeQuery = true)
+	public Page<Inquiry> titleSearch(Pageable pageable, @Param("word") String word);
 
 	@Query(value = "SELECT count(*) FROM inquiry where title like CONCAT('%', :word, '%')",
 		   nativeQuery = true)
+	public Long cntTitleSearch(@Param("word") String word);
+	
+	@Query(value = "SELECT count(*) FROM inquiry as i inner join user as u ON i.user_id = u.id where u.nickname like CONCAT('%', :word, '%')",
+			   nativeQuery = true)
 	public Long cntUserSearch(@Param("word") String word);
 }

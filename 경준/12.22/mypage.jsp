@@ -2,20 +2,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="../include/header.jsp"%>
 <link rel="stylesheet" href="/css/mypage.css"/>
-
-
 <div class="row">
-	<div class="col-2">
-	<div class="list-group list-group-flush" 
-	style="margin-top : 120px; margin-left : 40px;">
-		<a href="/user/view/<sec:authentication property="principal.user.id"/>" class="list-group-item list-group-item-action">내 정보 상세보기</a>
-	  	<a href="/user/update/<sec:authentication property="principal.user.id"/>" class="list-group-item list-group-item-action">내 정보 수정</a>
-	  	<a href="/user/reservationList/<sec:authentication property="principal.user.id"/>" class="list-group-item list-group-item-action">예약 현황</a>
-	  	<a href="/user/favorites/<sec:authentication property="principal.user.id"/>" class="list-group-item list-group-item-action">즐겨찾기 목록</a>
-	  	<a href="/user/userReview/<sec:authentication property="principal.user.id"/>" class="list-group-item list-group-item-action">내 후기 목록</a>
-		<a href="/inquiry/myQna/<sec:authentication property="principal.user.id"/>" class="list-group-item list-group-item-action">내 Q&A 목록</a>
-	</div>
-	</div>
+<%@ include file="mypageLeftNav.jsp" %>
 	<div class="col-8">
 		<h2 style="margin-top: 50px;">마이페이지</h2>
 		<hr/>
@@ -76,7 +64,7 @@
 					<td>${rsv.restaurant.name}</td>
 					<td><fmt:formatDate value="${rsv.rsvDateTime}" pattern="yyyy-MM-dd"/></td>
 					<td><fmt:formatDate value="${rsv.rsvDateTime}" pattern="HH:mm"/></td>
-					<td><a href="/user/reservationUpdate/${rsv.id}"><button type="button" class="btn btn-primary" id="updateRsv">예약 변경</button></a></td>
+					<td><a href="/user/reservationUpdate/${rsv.id}"><button type="button" class="btn btn-primary" id="updateRsv"><i class="fa-solid fa-pen"></i></button></a></td>
 					<td><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo${rsv.id }"><i class="fa-solid fa-magnifying-glass"></i></button></td>
 				</tr>
 				<tr>

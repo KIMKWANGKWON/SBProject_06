@@ -66,11 +66,11 @@ public class InquiryController {
 	
 	@GetMapping("myQna/{id}")
 	public String myQna(Model model, @PathVariable Long id,
-			  @PageableDefault(size = 1, sort = "regdate",
+			  @PageableDefault(size = 5, sort = "regdate",
 			  direction = Direction.DESC) Pageable pageable) {
 		Page<Inquiry> lists = iService.findByUser_id(id, pageable);
 		model.addAttribute("qna", lists);
-		return "/inquiry/myQna";
+		return "/user/myQna";
 	}
 	
 	@GetMapping("qnaView/{id}")

@@ -2,10 +2,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="../include/header.jsp" %>
 <jsp:useBean id="now" class="java.util.Date" />
-<div class="container">
-	<!-- 만료되지 않은 예약 table -->
-	<h3 align="center">[<sec:authentication property="principal.user.nickname"/>]님의 예약현황</h3>
-	<table class="table table-hover">
+<link rel="stylesheet" href="/css/mypage.css"/>
+<div class="row">
+<%@ include file="mypageLeftNav.jsp" %>
+	<div class="col-8">
+	<h2 align="center"><sec:authentication property="principal.user.nickname"/>님의 예약현황</h2>
+<table class="table table-hover">
 		<thead align="center">
 			<tr>
 				<th>음식점</th>
@@ -25,12 +27,13 @@
 					<td><fmt:formatDate value="${rsv.rsvDateTime}" pattern="yyyy-MM-dd"/></td>
 					<td><fmt:formatDate value="${rsv.rsvDateTime}" pattern="HH:mm"/></td>
 					<td><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo${rsv.id }"><i class="fa-solid fa-magnifying-glass"></i></button></td>
-					<td><a href="/user/reservationUpdate/${rsv.id}"><button type="button" class="btn btn-primary" id="updateRsv"><i class="fa-solid fa-pen"></i></button></a></td>
-					<c:if test="${rsv.rsvDateTime < now}">
-					<td><a href="/user/review/${rsv.restaurant.id}"><button type="button" class="btn btn-danger" id="review"><i class="fa-solid fa-comments"></i></button></a>
-					</c:if>
 					<c:if test="${rsv.rsvDateTime >= now}">
+					<td><a href="/user/reservationUpdate/${rsv.id}"><button type="button" class="btn btn-primary" id="updateRsv"><i class="fa-solid fa-pen"></i></button></a></td>
 					<td></td>
+					</c:if>
+					<c:if test="${rsv.rsvDateTime < now}">
+					<td></td>
+					<td><a href="/user/review/${rsv.restaurant.id}"><button type="button" class="btn btn-danger" id="review"><i class="fa-solid fa-comments"></i></button></a>
 					</c:if>
 				</tr>
 				<tr>
@@ -75,15 +78,15 @@
   							<div class="card-body" align="left">
   								<table class="table table-borderless">
   									<tr>
-  										<td width="30%">요구사항</td>
+  										<td rowspan="7"width="30%">요구사항</td>
   										<td rowspan="7">${rsv.msg }</td>
   									</tr>
-									<tr><td></td></tr>
-									<tr><td></td></tr>
-									<tr><td></td></tr>
-									<tr><td></td></tr>
-									<tr><td></td></tr>
-									<tr><td></td></tr>
+									<tr></tr>
+									<tr></tr>
+									<tr></tr>
+									<tr></tr>
+									<tr></tr>
+									<tr></tr>
      							</table>
      						</div>
      					</div>
@@ -97,22 +100,12 @@
 	</table>
 	
 	<div class="d-flex justify-content-center mt-5 mr-auto">
-		<ul class="pagination justify-content-center">
-			<fmt:formatNumber type="number" maxFractionDigits="0" groupingUsed="false" value="${((reservations.pageable.pageNumber) / 3 - ((reservations.pageable.pageNumber) / 3) % 1)}" var="start"/>
+		<c:set value="${reservations }" var="pageImpl"/>
+		<c:url value="/user/reservationList/${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}" var="url">
+		</c:url>
 
-		    <li class="page-item <c:if test="${reservations.pageable.pageNumber < 3 }">disabled</c:if>"><a class="page-link" 
-		    href="/user/reservationList/<sec:authentication property="principal.user.id"/>?page=${start * 3 - 3}">Previous</a></li>
-		    <c:forEach 
-		    begin="${start * 3 }" 
-		    end="${start * 3 + 2 }" var="page">
-		    <c:if test="${page+1 <= reservations.totalPages }">
-		    <li class="page-item <c:if test="${reservations.pageable.pageNumber eq page }">active</c:if>"><a class="page-link" 
-		    href="/user/reservationList/<sec:authentication property="principal.user.id"/>?page=${page}">${page+1}</a></li>
-		    </c:if>
-		    </c:forEach>
-		    <li class="page-item <c:if test="${start * 3 + 3 >= reservations.totalPages }">disabled</c:if>"><a class="page-link" 
-		    href="/user/reservationList/<sec:authentication property="principal.user.id"/>?page=${start * 3 + 3}">Next</a></li>
-		 </ul>
+		<%@include file="../include/pagination.jsp" %>
 	</div>
-
+	</div>
+	<div class="col-2"></div>
 </div>

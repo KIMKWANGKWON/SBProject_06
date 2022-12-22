@@ -55,6 +55,7 @@
 			<form class="form-inline" action="/inquiry/qnaList" method="get">
 				<select name="field" class="form-control mr-sm-1">
 					<option value="title">제목</option>
+					<option value="nickname">작성자</option>
 				</select>
 				<input type="text" name="word" class="form-control" placeholder="search">
 				<button class="btn btn-info">검색</button>

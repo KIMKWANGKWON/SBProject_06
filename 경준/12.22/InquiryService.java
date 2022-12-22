@@ -39,6 +39,8 @@ public class InquiryService {
 	public Page<Inquiry> findAll(Pageable pageable, String field, String word) {
 		Page<Inquiry> qlists = iRepository.findAll(pageable);
 		if(field.equals("title")) {
+			qlists = iRepository.titleSearch(pageable, word);
+		} else if(field.equals("nickname")) {
 			qlists = iRepository.userSearch(pageable, word);
 		}
 		return qlists;
@@ -46,6 +48,8 @@ public class InquiryService {
 	public Long countQna(String field, String word) {
 		Long count = iRepository.count();
 		if(field.equals("title")) {
+			count = iRepository.cntTitleSearch(word);
+		} else if(field.equals("nickname")) {
 			count = iRepository.cntUserSearch(word);
 		}
 		return count;

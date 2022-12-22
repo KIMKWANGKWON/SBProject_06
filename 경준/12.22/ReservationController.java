@@ -62,7 +62,7 @@ public class ReservationController {
 	public String reservationList(@PathVariable Long uid, 
 								  Model model,
 								  @PageableDefault(size = 4, sort = "rsvDateTime",
-								  direction = Direction.ASC) Pageable pageable) {
+								  direction = Direction.DESC) Pageable pageable) {
 		Page<Reservations> lists = uService.findByUid(pageable, uid);
 
 		model.addAttribute("reservations", lists);
