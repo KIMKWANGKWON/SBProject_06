@@ -5,15 +5,16 @@
 
 <style>
 #popup_open_btn{
-        width:110px;
-  		margin-left: 1000px;
         display:block;
+        color: #a2a2a2;
     }
 #btnSelect{
         width:110px;
         magin-left : 100px;
     }
-    
+.jumbotron {
+		background-color: white;
+}  
 #my_modal {
                 display: none;
                 width: 1000px;
@@ -21,7 +22,7 @@
                 padding: 20px 60px;
                 background-color: #fefefe;
                 border: 1px solid #888;
-                border-radius: 3px;
+                border-radius: 5px;
             }
 #my_modal .modal_close_btn {
                 position: absolute;
@@ -35,6 +36,10 @@
 
 .fa-regular.fa-star{
 	color: red;
+}
+
+.fa-solid.fa-eye{
+	color: gray;
 }
 .btn_search{
   font-weight : 900;
@@ -62,7 +67,7 @@
   display:inline-block;
   width:22px;
   height:22px;
-  border:2px solid #F47C7C;
+  border:2px solid #a2a2a2;
   border-radius: 4px;
   vertical-align:middle;
   cursor:pointer;
@@ -71,32 +76,42 @@
 /* 필터 체크 후 */  
 #my_modal input[type=checkbox]:checked + label:before{
   content:"";
-  background-color:#F47C7C;
-  border-color:#F47C7C;
+  background-color:#BBD1E8;
+  border-color:#BBD1E8;
   background-image: url('/checkImg/check_btn.png');
   background-size:10px;
   background-repeat: no-repeat;
   background-position: 50%;
   }
+  
+  /* top */
+a.top {
+  position: fixed;
+  left: 92%;
+  bottom: 50px;
+  display: none;
+  color : #212121;
+}
 </style>
 
 <div class="container">
-	<div style="display : flex">
-		<form action="/restaurant/list" style="position : relative">
-			<input type="text" id="keywords" name="keywords" placeholder="Search Restaurant" 
-			class="form-control form-control-lg"
-			style="width : 40vw; height : 6vh; margin-bottom: 10px">
-			<button type="submit" id="searchBtn" class="btn_search fa-solid fa-magnifying-glass"></button>
-		</form>
-	</div>
-<h1>[${param.keywords }]에 대한 검색결과(${rPage.totalElements})</h1><br/>
+	<div class="jumbotron"></div>
+	<div style="display : flex;  margin-left:15%">
+      <form action="/restaurant/list" style="position : relative">
+         <input type="text" id="keywords" name="keywords" placeholder="Search Restaurant" 
+         class="form-control form-control-lg"
+         style="width : 40vw; height : 6vh; margin-bottom: 10px;">
+         <button type="submit" id="searchBtn" class="btn_search fa-solid fa-magnifying-glass"></button>
+      </form>
+   </div><br/>
+<h2 style="margin-left:15%"><i class="fa-solid fa-snowflake"></i>&nbsp;[${param.keywords }]에 대한 검색결과(${rPage.totalElements})</h2><br/>
 
   <hr style="border:1px color= silver;" width="auto"> <!-- 선 -->
   
   <div class="d-flex flex-row-reverse">
    <div class="p-2">
     <div class="dropdown">
-    	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    	<button type="button" style="background-color: #a2a2a2; border-color: #a2a2a2;" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
       		정렬
     	</button>
 	<div class="dropdown-menu">
@@ -106,7 +121,8 @@
   </div>
   </div>
   <div class="p-2">
-  	<button type="button" style="background-color: #48D1CC; border-color: #48D1CC" class="btn btn-primary" id="popup_open_btn">추천 검색어</button>	
+  	<button type="button" style="background-color: white; border-color: #a2a2a2;" class="btn btn-primary" id="popup_open_btn">
+	<i class="fa-solid fa-hashtag"></i>&nbsp;&nbsp;키워드</button>	
   </div>
   </div>
   <div class="container">
@@ -117,7 +133,9 @@
   <div onclick="location.href='/restaurant/view/${restaurant.id}'">
     <img class="card-img-top" src="${restaurant.thumImage }" alt="Card image" style="width:100%; height:400px;">
     <div class="card-body">
-      <h4 class="card-title">${restaurant.name }</h4>
+    	<div class="row">
+      <h4 class="card-title ml-3">${restaurant.name }</h4>&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-eye"></i>&nbsp;&nbsp;${restaurant.readCount}
+      </div>
       <p class="card-text">운영시간 : ${restaurant.openTime } : ${restaurant.closeTime }<br/></p>
       <p class="card-text">주소 : ${restaurant.address }</p>
       
@@ -125,8 +143,7 @@
 	</div>
 	
 <!-- 좋아요 버튼 -->
-    <div class="likeContainer" align="right">
-    <i class="fa-solid fa-users fa-2x"></i>&nbsp;&nbsp;${restaurant.readCount}
+    <div class="likeContainer mr-3" align="right">
     <a onclick="javascript:like(this)" data-param="${restaurant.id }"><span id="showLike">
 	<c:choose>
 	
@@ -168,7 +185,7 @@
 </div>
   </div>
 <!-- 모달창 -->
- <div id="my_modal">
+ <div id="my_modal" tabindex="0">
 
            
            <h3>추천 검색어</h3><br/>
@@ -330,7 +347,7 @@
 				<p>	
 					<input type='checkbox' name='food' id="check_btn42" value='#분식'/><label for="check_btn42"><span>분식&nbsp;&nbsp;</span></label>
 					<input type='checkbox' name='food' id="check_btn43" value='#경양식'/><label for="check_btn43"><span>경양식&nbsp;&nbsp;</span></label>
-					<input type='checkbox' name='food' id="check_btn44" value='#식육(숯불고기)'/><label for="check_btn44"><span>식육(숯불고기)&nbsp;&nbsp;</span></label>
+					<input type='checkbox' name='food' id="check_btn44" value='#식육(숯불고기)'/><label for="check_btn44"><span>숯불고기&nbsp;&nbsp;</span></label>
 					<input type='checkbox' name='food' id="check_btn45" value='#중국식'/><label for="check_btn45"><span>중국식&nbsp;&nbsp;</span></label>
 					<input type='checkbox' name='food' id="check_btn46" value='#일반조리판매'/><label for="check_btn46"><span>일반조리판매</span></label>
 				</p>
@@ -338,13 +355,15 @@
 			
       		
       		<div align="center">
-      		<a class="modal_close_btn1"><button onclick='getCheckboxValue()' class="btn btn-info">&nbsp;&nbsp;<i class="fa-solid fa-magnifying-glass"></i>&nbsp;&nbsp;</button></a>
+      		<a class="modal_close_btn1"><button onclick='getCheckboxValue()' class="btn btn-info" style="background-color:#9EBDDB; border-color: #9EBDDB; color: white">&nbsp;&nbsp;<i class="fa-solid fa-magnifying-glass"></i>&nbsp;&nbsp;</button></a>
 			<div id='result'></div>
 			</div>
 			
       	<a class="modal_close_btn"><button type="button" class="close" data-dismiss="modal">&times;</button></a>
  </div>
-
+	<div class="col-2">
+ <a href="#" class="top"><i class="fa-solid fa-caret-up fa-2x"></i><br>TOP</a>
+</div>
 <script>
 //좋아요
 var like = function(input){
@@ -393,6 +412,9 @@ function getCheckboxValue()  {
 function modal(id) {
     var zIndex = 9999;
     var modal = document.getElementById(id);
+    
+    
+    
   // 모달 div 뒤에 희끄무레한 레이어
     var bg = document.createElement('div');
     bg.setStyle({
@@ -414,6 +436,7 @@ function modal(id) {
         modal.style.display = 'none';
     });
     
+    
     // checkbox 선택 후 닫기 버튼 처리
     modal.querySelector('.modal_close_btn1').addEventListener('click', function() {
         bg.remove();
@@ -433,14 +456,40 @@ function modal(id) {
         webkitTransform: 'translate(-50%, -50%)'
     });
 }
+
+
+
+
+
+    
+
 // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
 Element.prototype.setStyle = function(styles) {
     for (var k in styles) this.style[k] = styles[k];
     return this;
 };
 document.getElementById('popup_open_btn').addEventListener('click', function() {
+	
     // 모달창 띄우기
     modal('my_modal');
+});
+
+
+
+
+// 어느정도 스크롤 시 top 링크 보임
+$( window ).scroll( function() {
+   if ( $( this ).scrollTop() > 200 ) {
+      $( '.top' ).fadeIn();
+   } else {
+      $( '.top' ).fadeOut();
+   }
+});
+
+//top클릭 시 스르륵 올라감
+$( '.top' ).click( function() {
+   $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+   return false;
 });
 </script>
    
