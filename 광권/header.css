@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+@font-face { /* BMJUA 폰트 적용 */
+  font-family: "BMJUA";
+  src: url("../font/KoPubWorld Batang Light.ttf") format("truetype");
+  font-weight: normal;
+} /* 이후 "BMJUA"으로 폰트 적용 가능 */
+
+* {
+  font-family: 'BMJUA';
+}
+
+body {
+	overflow-x : hidden;
+	background-color : white !important;
+	color : #212121 !important;
+}
+header {
+	position : relative;
+	width : 100vw;
+	height : 5vh;
+	z-index : 1050;
+	color : #212121 !important;
+	background-color: white;
+}
+header a {
+	color : #212121 !important;
+}
+header a:hover {
+	color : #212121 !important;
+}
+header button {
+	color : #212121 !important;
+}
+header button:hover {
+	color : #212121 !important;
+	text-decoration: none !important;
+}
+.shadow{
+	background-color: white;
+	box-shadow: 0px 0px 10px 5px gray;
+}
+.gnb {
+	width:80vw;
+ 	height:5vh;
+/* 	position : absolute; */
+	top : 50%;
+	left : 50%;
+	transform:translate(-50%, -1000%);
+}
+a {
+	color : #212121 !important;
+}
+.thumImg{
+	width : 200px;
+	height : 200px;
+}
+.dropdown-menu a{
+	color : #212121 !important;
+}
+
