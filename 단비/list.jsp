@@ -9,7 +9,6 @@
   		margin-left: 1000px;
         display:block;
     }
-
 #btnSelect{
         width:110px;
         magin-left : 100px;
@@ -24,16 +23,18 @@
                 border: 1px solid #888;
                 border-radius: 3px;
             }
-
 #my_modal .modal_close_btn {
                 position: absolute;
                 top: 10px;
                 right: 10px;
             }
-            
-.likeContainer {
-	padding : 0px 350px;
-	color : red;
+
+.fa-solid.fa-star{
+	color: red;	
+}
+
+.fa-regular.fa-star{
+	color: red;
 }
 .btn_search{
   font-weight : 900;
@@ -46,18 +47,15 @@
   top : 40%;
   transform : translatey(-50%);
 }
-
 /* 기존 체크박스 안보이게 */
 #my_modal input[type=checkbox] {
 	display: none;
 }
-
 /* 위치 설정 */
 #my_modal input[type=checkbox] + label > span{
   vertical-align: middle;
   padding-left: 5px;
  }
-
 /* 필터 체크하기 전 */
 #my_modal input[type=checkbox] + label:before{
   content:"";
@@ -86,44 +84,58 @@
 	<div style="display : flex">
 		<form action="/restaurant/list" style="position : relative">
 			<input type="text" id="keywords" name="keywords" placeholder="Search Restaurant" 
-			class="form-control form-control-lg" 
+			class="form-control form-control-lg"
 			style="width : 40vw; height : 6vh; margin-bottom: 10px">
 			<button type="submit" id="searchBtn" class="btn_search fa-solid fa-magnifying-glass"></button>
 		</form>
 	</div>
 <h1>[${param.keywords }]에 대한 검색결과(${rPage.totalElements})</h1><br/>
- <h4>
- <a href="/restaurant/list?keywords=${param.keywords }&order=popular">조회수 많은 순</a>
- <a href="/restaurant/list?keywords=${param.keywords }&order=recent">최근 등록 순</a>
- </h4>
-<button type="button" style="background-color: #48D1CC; border-color: #48D1CC" class="btn btn-primary" id="popup_open_btn">추천 검색어</button>	
 
   <hr style="border:1px color= silver;" width="auto"> <!-- 선 -->
+  
+  <div class="d-flex flex-row-reverse">
+   <div class="p-2">
+    <div class="dropdown">
+    	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      		정렬
+    	</button>
+	<div class="dropdown-menu">
+ 		<a href="/restaurant/list?keywords=${param.keywords }&order=popular" class="dropdown-item">조회수 많은 순</a>
+ 		<a href="/restaurant/list?keywords=${param.keywords }&order=recent" class="dropdown-item">최근 등록 순</a>
+	</div>
+  </div>
+  </div>
+  <div class="p-2">
+  	<button type="button" style="background-color: #48D1CC; border-color: #48D1CC" class="btn btn-primary" id="popup_open_btn">추천 검색어</button>	
+  </div>
+  </div>
   <div class="container">
 <!--   <h1>File Image</h1><br/> -->
   <div class="row">
-  <c:forEach items="${rPage.content}" var="restaurant">
-  <div class="card" style="width:400px">
+  <c:forEach items="${rPage.content}" var="restaurant" varStatus="st">
+  <div class="card <c:if test="${(st.count % 2) == 1 }">mr-auto</c:if>" style="width:49%; height:600px; margin-top : 2%;">
   <div onclick="location.href='/restaurant/view/${restaurant.id}'">
-    <img class="card-img-top" src="${restaurant.thumImage }" alt="Card image" style="width:100% height:200">
+    <img class="card-img-top" src="${restaurant.thumImage }" alt="Card image" style="width:100%; height:400px;">
     <div class="card-body">
       <h4 class="card-title">${restaurant.name }</h4>
       <p class="card-text">운영시간 : ${restaurant.openTime } : ${restaurant.closeTime }<br/></p>
       <p class="card-text">주소 : ${restaurant.address }</p>
-      <!-- <a href="#" class="btn btn-primary">detail</a> -->
+      
       </div>
 	</div>
-    <div class="likeContainer">
-      <h2>
+	
+<!-- 좋아요 버튼 -->
+    <div class="likeContainer" align="right">
+    <i class="fa-solid fa-users fa-2x"></i>&nbsp;&nbsp;${restaurant.readCount}
     <a onclick="javascript:like(this)" data-param="${restaurant.id }"><span id="showLike">
 	<c:choose>
 	
-		<c:when test="${fMap[restaurant.id] != null}"><i class="fa-solid fa-star"></i>
+		<c:when test="${fMap[restaurant.id] != null}"><i class="fa-solid fa-star fa-2x"></i>
 		</c:when>	
-		<c:when test="${fMap[restaurant.id] == null}"><i class="fa-regular fa-star"></i>
+		<c:when test="${fMap[restaurant.id] == null}"><i class="fa-regular fa-star fa-2x"></i>
 		</c:when>
 	</c:choose>
-	</span></a></h2>
+	</span></a>
       </div>
     </div>
 <%--     <input type="button" class="btn btn-secondary" onclick="like(this)" value="좋아요">
@@ -133,22 +145,26 @@
     
   </div>
   <br>
-    <ul class="pagination justify-content-center">
-    <c:if test="${rPage.pageable.pageNumber + 1 > 3 }">
-    <li class="page-item"><a class="page-link" 
-    href="/restaurant/list?keywords=${param.keywords }&order=${param.order }&page=${rPage.pageable.pageNumber - 2}">Previous</a></li>
-    </c:if>
-    <c:forEach 
-    begin="${(((rPage.pageable.pageNumber) / 3) - ((rPage.pageable.pageNumber) / 3) % 1) * 3}" 
-    end="${(((rPage.pageable.pageNumber) / 3) - ((rPage.pageable.pageNumber) / 3) % 1) * 3 + 2}" var="page">
-    <li class="page-item"><a class="page-link" 
-    href="/restaurant/list?keywords=${param.keywords }&order=${param.order }&page=${page+1}">${page+1}</a></li>
-    </c:forEach>
-    <c:if test="${rPage.pageable.pageNumber + 1 < rPage.totalPages}">
-    <li class="page-item"><a class="page-link" 
-    href="/restaurant/list?keywords=${param.keywords }&order=${param.order }&page=<fmt:formatNumber type="number" maxFractionDigits="0"  value="${(((param.page-1) / 3) - ((param.page-1) / 3) % 1) * 3 + 4}" />">Next</a></li>
-  	</c:if>
-  </ul>
+  
+	<ul class="pagination justify-content-center">
+	<fmt:formatNumber type="number" groupingUsed="false" maxFractionDigits="0"  value="${((rPage.pageable.pageNumber) / 3 - ((rPage.pageable.pageNumber) / 3) % 1)}" var="start"/>
+	<c:url value="/restaurant/list" var="url">
+		<c:param name="keywords" value="${param.keywords }"/>
+		<c:param name="order" value="${param.order }"/>
+	</c:url>
+		<li class="page-item <c:if test="${rPage.pageable.pageNumber < 3 }">disabled</c:if>"><a class="page-link" 
+			href="${url}&page=${start * 3 - 2}">Previous</a></li>
+		<c:forEach 
+		    begin="${start * 3 + 1}" 
+		    end="${start * 3 + 3 }" var="page">
+		    <c:if test="${page <= rPage.totalPages }">
+		    <li class="page-item <c:if test="${rPage.pageable.pageNumber + 1 eq page }">active</c:if>"><a class="page-link" 
+		    href="${url}&page=${page}">${page}</a></li>
+		    </c:if>
+		</c:forEach>
+		<li class="page-item <c:if test="${start * 3 + 4 > rPage.totalPages }">disabled</c:if>"><a class="page-link" 
+		href="${url}&page=${start * 3 + 4}">Next</a></li>
+	</ul>
 </div>
   </div>
 <!-- 모달창 -->
@@ -348,9 +364,9 @@ var like = function(input){
 		contentType : "application/json;charset=utf-8",
 		success:function(resp){
 				if(resp==0){
-					input.querySelector('span i').className="fa-regular fa-star"
+					input.querySelector('span i').className="fa-regular fa-star fa-2x"
 				} else{
-					input.querySelector('span i').className="fa-solid fa-star"
+					input.querySelector('span i').className="fa-solid fa-star fa-2x"
 				}
 		}
 	})
@@ -358,9 +374,6 @@ var like = function(input){
 	</sec:authorize>
 	alert("로그인이 필요한 서비스입니다.")
 }
-
-
-
 function getCheckboxValue()  {
 	  // 선택된 목록 가져오기
 	  const query = 'input[name="food"]:checked';
@@ -376,14 +389,10 @@ function getCheckboxValue()  {
 	  // 출력
 	  $('#keywords').val(result)
 	}
-
-
-
 //모달
 function modal(id) {
     var zIndex = 9999;
     var modal = document.getElementById(id);
-
   // 모달 div 뒤에 희끄무레한 레이어
     var bg = document.createElement('div');
     bg.setStyle({
@@ -395,11 +404,10 @@ function modal(id) {
         height: '100%',
         overflow: 'auto',
         // 레이어 색갈은 여기서 바꾸면 됨
-        backgroundColor: 'rgba(0,0,0,0.4)'
+        backgroundColor: 'rgba(0,0,0,0.5)'
     });
     document.body.append(bg);
     
-
     // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
     modal.querySelector('.modal_close_btn').addEventListener('click', function() {
         bg.remove();
@@ -411,15 +419,12 @@ function modal(id) {
         bg.remove();
         modal.style.display = 'none';
     });
-
     modal.setStyle({
         position: 'fixed',
         display: 'block',
         boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
         // 시꺼먼 레이어 보다 한칸 위에 보이기
         zIndex: zIndex + 1,
-
         // div center 정렬
         top: '50%',
         left: '50%',
