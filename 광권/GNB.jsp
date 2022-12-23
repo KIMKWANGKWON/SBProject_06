@@ -6,10 +6,13 @@
 </style>
 <div class="gnb  fixed-top">
 <nav class="navbar navbar-expand-sm mb-3">
-  <a class="navbar-brand mr-auto" href="/">
 <!-- <img src="bird.jpg" alt="Logo" style="width:40px;"> -->
-    <h2>Root of Food</h2>
-  </a>
+    <a class="navbar-brand mr-auto navHead" href="/">
+    <h2>
+    <img src="/img/Tree.png" style="height:40px;width:40px;"/>
+    Root of Food
+    </h2>
+    </a>
   <!-- Links -->
   <div id="defNav">
   <ul class="navbar-nav">

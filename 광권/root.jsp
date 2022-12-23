@@ -22,6 +22,7 @@ a.top {
   left: 92%;
   bottom: 50px;
   display: none;
+  color : #212121;
 }
 </style>
 
@@ -97,7 +98,14 @@ a.top {
 </div>
 
 <div class="any_content">
-   <h2><button type="button" id="goAnywhere">아무 식당 가기</button></h2>
+    <div class="button_base b10_tveffect" id="goAnyWhere">
+        <div>아무 식당 가기</div>
+        <div>
+            <div>%#@%@#!#%@!</div>
+            <div>@#%^!@#@#^%</div>
+            <div>@!#^@#^@#^@</div>
+        </div>
+    </div>
 </div>
 <script>
 $("#goAnywhere").click(function(){
@@ -107,7 +115,6 @@ $("#goAnywhere").click(function(){
 </script>
 
 
-<%@ include file="include/footer.jsp" %>
 
 </div>
 <div class="col-2">
@@ -138,6 +145,7 @@ $("#goAnywhere").click(function(){
     </div>
  </div>
 
+<%@ include file="include/footer.jsp" %>
 
 </body>
 
@@ -177,14 +185,12 @@ window.addEventListener('scroll', func);
 const sFollower = function(){
 	if($(window).scrollTop() < $(".row").offset().top){
 		$("header").attr("class","up");
-// 		$("#gnb").css("box-shadow","none");
 		$("#gnb").css("height","0");
 		$(".shadow").attr("class","noShadow");
 	} else{
 		$("header").attr("class","down");
 		$("#gnb").css("height",$("nav").height()+13);
 		$(".noShadow").attr("class","shadow");
-// 		$("#gnb").css("box-shadow","0px 0px 10px 5px gray");
 	}
 }
 window.addEventListener('scroll', sFollower);
