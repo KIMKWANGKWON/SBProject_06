@@ -83,6 +83,7 @@
   background-repeat: no-repeat;
   background-position: 50%;
   }
+
   
   /* top */
 a.top {
@@ -185,7 +186,7 @@ a.top {
 </div>
   </div>
 <!-- 모달창 -->
- <div id="my_modal" tabindex="0">
+ <div id="my_modal">
 
            
            <h3>추천 검색어</h3><br/>
@@ -434,8 +435,7 @@ function modal(id) {
     modal.querySelector('.modal_close_btn').addEventListener('click', function() {
         bg.remove();
         modal.style.display = 'none';
-    });
-    
+    }); 
     
     // checkbox 선택 후 닫기 버튼 처리
     modal.querySelector('.modal_close_btn1').addEventListener('click', function() {
@@ -455,13 +455,17 @@ function modal(id) {
         msTransform: 'translate(-50%, -50%)',
         webkitTransform: 'translate(-50%, -50%)'
     });
+    
+  //Esc 누르면 창 꺼짐
+    document.addEventListener('keyup', function(e) {
+       if (e.keyCode == 27) {
+       	bg.remove();
+       	modal.style.display = 'none';
+       }
+    });
+
 }
 
-
-
-
-
-    
 
 // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
 Element.prototype.setStyle = function(styles) {
