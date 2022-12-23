@@ -1,8 +1,6 @@
-favorites.jsp
+list.jsp
 
-UserController.java 88~96번 줄 변경
+자잘하게 넣어서 정확히 기억이 안나거든요ㅎ
+전체 복붙 해주시면 감사하겠습니당
 
-UserService.java 63~65번 줄 변경
-
-FavoritesRepository.java 18번 줄 추가
-
+일단 버튼 색과 모달 체크박스 색 변경, 모달 esc로 닫기, 눈이 좀 무서워서 회색으로 바꿨습니다 
