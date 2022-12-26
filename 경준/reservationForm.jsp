@@ -4,15 +4,15 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-
 <!-- date time picker -->
 
 
 <div class="container" style="position:relative;">
+	<div class="jumbotron"></div>
 	<h2 align="center">${restaurant.name } 예약하기</h2>
 	<div class="row" align="center">
 		<div class="col-lg-6">					<!-- 썸네일 -->
-			<img src="${restaurant.thumImage }">
+			<img src="${restaurant.thumImage }" width="100%">
 		</div>
 		<div class="col-lg-6">					<!--  -->
 			<div id="datepicker"></div>
@@ -21,28 +21,55 @@
   	<div class="mt-3" align="center">
   		<div class="card" style="width:100%">	<!-- 예약정보 -->
   			<div class="row" align="center">
-  			<div class="col-lg-8">
+  			<div class="col-lg-7">
 				<div class="card-body" align="left">
 					<div class="row">
-					<div class="col-lg-6">
-						<label for="name">예약자</label>
-      					<input type="text" id="name" value='<sec:authentication property="principal.user.nickname"/>' name="name" class="form-control"><br>
-      					<label for="peopleCnt">예약자 수</label>
-      					<input type="text" id="peopleCnt" name="peopleCnt" class="form-control">
+					<div class="col-lg-5">
+						<table class="table table-borderless">
+							<tr><td><h1>Reservation</h1></td></tr>
+							<tr><td><h3>${restaurant.name }</h3></td></tr>
+							<tr><td><h6>${restaurant.tel }</h6></td></tr>
+      					</table>
       				</div>
-      				<div class="col-lg-6">
-						<label for="rsvDate">예약날짜</label>
-      					<input type="text" id="rsvDate" name="rsvDate" class="form-control" readonly="readonly"><br>
-      					<label for="rsvTime">예약시간</label>
-      					<input type="text" id="rsvTime" name="rsvTime" class="form-control timepicker" readonly="readonly">
+      				<div class="col-lg-7">
+      					<table class="table table-borderless">
+      						<tr>
+      							<td>예약자</td>
+      							<td width="60%"><input type="text" id="name" value='<sec:authentication property="principal.user.nickname"/>' name="name" class="form-control" readonly="readonly"></td>
+      						</tr>
+      						<tr>
+      							<td>예약자수</td>
+      							<td><input type="text" id="peopleCnt" name="peopleCnt" class="form-control"></td>
+      						</tr>
+      						<tr>
+      							<td>예약날짜</td>
+      							<td><input type="text" id="rsvDate" name="rsvDate" class="form-control" readonly="readonly"></td>
+      						</tr>
+      						<tr>
+      							<td>예약시간</td>
+      							<td><input type="text" id="rsvTime" name="rsvTime" class="form-control timepicker" readonly="readonly"></td>
+      						</tr>
+      					</table>
+      					
       				</div>
       				</div>
     			</div>
   			</div>
-  			<div class="col-lg-4">
+  			<div class="col-lg-5">
   				<div class="card-body" align="left">
-  					<label for="msg">요구사항</label>
-     				<textarea class="form-control" rows="6" id="msg" name="msg"></textarea>
+  					<table class="table table-borderless">
+  						<tr>
+  							<td>요구사항</td>
+  							<td rowspan="7"><textarea class="form-control" rows="7" id="msg" name="msg"></textarea></td>
+  						</tr>
+						<tr><td></td></tr>
+						<tr><td></td></tr>
+						<tr><td></td></tr>
+						<tr><td></td></tr>
+						<tr><td></td></tr>
+						<tr><td></td></tr>
+     				</table>
+  					
      			</div>
      		</div>
      		</div>
@@ -117,7 +144,7 @@ $("#btnReservation").click(function() {
 	$('.timepicker').timepicker({
     	timeFormat: 'HH:mm',
     	interval: 30,
-//    	minTime: '${restaurant.openTime}',
+   		minTime: '${restaurant.openTime}',
     	maxTime: '${restaurant.rsvTime}',
     	defaultTime: '${restaurant.openTime}',
     	startTime: '${restaurant.openTime}',

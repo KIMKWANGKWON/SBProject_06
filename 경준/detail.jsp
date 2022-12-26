@@ -3,17 +3,6 @@
 
 
 <style>
-	.restaurant_image{
-		width: 40%
-	}
-	.restaurant_info{
-		margin-left: 30px;
-		width: 50%
-	}
-	
-	.review_image{
-		width: 40%
-	}
 #myform fieldset{
     display: inline-block;
     direction: ltr;
@@ -23,21 +12,25 @@
     text-align: right;
 }
 #myform .empty{
-    font-size: 3em;
+    font-size: 1em;
      color: transparent; 
      text-shadow: 0 0 0 #f0f0f0; 
 }
 
 #myform .full{
-    font-size: 3em;
+    font-size: 1em;
      text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
 
+.fa-star {
+	color :red;
+}
 
 
 </style>
 
 <div class="container">
+	<div class="jumbotron"></div>
 	<h2 align="left">${restaurant.name }
 		<a href="javascript:like(this)"><span id="showLike">
 			<c:if test="${findLike.id eq null }">
@@ -50,9 +43,12 @@
 	<input type="hidden" value="${restaurant.id }">
 	<div class="container-fluid">
     	<div class="row" align="center">
+    		<div class="col-lg-6">
       		<div class="restaurant_image">
-				<img class="img-fluid" src="${restaurant.thumImage }" alt="food">
+				<img class="img-fluid" src="${restaurant.thumImage }" alt="food" width="100%">
 			</div>
+			</div>
+			<div class="col-lg-6">
       		<div class="restaurant_info">
 				<table class="table table-borderless">
 					<tr>
@@ -65,8 +61,11 @@
 					</tr>
 					<tr>
 						<td>운영시간</td>
-						<td>${restaurant.openTime } ~ ${restaurant.closeTime}<br/>
-							예약 마감 시간 : ${restaurant.rsvTime }</td>
+						<td>${restaurant.openTime } - ${restaurant.closeTime}</td>
+					</tr>
+					<tr>
+						<td>예약마감</td>
+						<td>${restaurant.rsvTime }</td>
 					</tr>
 					<tr>
 						<td>홈페이지</td>
@@ -76,6 +75,7 @@
 				<div>
 					<input type="button" class="btn btn-info" id="goReservation" value="예약하기">
 				</div>
+			</div>
 			</div>
     	</div>  
   	</div>
@@ -124,7 +124,7 @@
 				<table class="table table-hover">
 			
 					<tr align="center">
-						<th>사진</th>
+						<th width="40%">사진</th>
 						<th>작성자</th>
 						<th>평점</th>
 						<th>리뷰</th>
@@ -180,7 +180,7 @@
   					<c:if test="${review.comment.id eq null }">
 					<tr><td></td>
 						<td colspan="3"><div id="demo${review.id }" class="collapse">
-    					<textarea id="msg" class=form-control>└   </textarea>
+    					<textarea id="msg" class=form-control>사장님 댓글</textarea>
   						</div></td>
   						<td><div id="demo${review.id }" class="collapse">
   						<input type="button" class="btn btn-primary" onclick="javascript:commentInsert('${review.id}')" value="입력"></div></td>
@@ -217,7 +217,6 @@ var like = function(input){
 		data : JSON.stringify(data),
 		contentType : "application/json;charset=utf-8",
 		success:function(resp){
-			alert("성공");
 			if(resp==0) {
 				$("#showLike").html("<i class='fa-regular fa-star'>")
 			} else {
@@ -252,6 +251,7 @@ function commentInsert(id) {
 		data : JSON.stringify(data)
 	})
 	.done(function() {
+		
 		alert("good")
 	})
 	.fail(function() {
